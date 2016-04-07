@@ -39,6 +39,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void RaiseEvent(event_t event, int arg);
+    void RaiseEvent2(event_t2 event, float freq, float swr);
+
 
     static const Version version;
 
@@ -47,6 +49,7 @@ public:
 private:
     void set_band(double f, double span);
     void set_scan_disp();
+    void update_fstep();
     void draw_graph1();
     void populate_table();
     void toDom(QDomDocument &doc);
@@ -76,6 +79,7 @@ private slots:
     void Slot_monStart_click();
     void Slot_monStop_click();
     void Slot_montimer_timeout();
+    void Slot_onno_change(int);
 };
 
 #endif // MAINWINDOW_H

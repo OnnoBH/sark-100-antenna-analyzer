@@ -32,7 +32,9 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
 {
     //TODO: most of this function should be defined elsewhere leaving this class generic
 
-    QPen pen1(Qt::black), pen2(Qt::blue), pen3(QColor(255,85,0)), pen4(Qt::red), pen5(Qt::green);
+    QPen pen1(Qt::black), pen2(Qt::blue), pen3(QColor(255, 191, 0 )), pen4(Qt::red), pen5(Qt::green);
+
+
 
     pen1.setWidth(0);
     pen2.setWidth(0);
@@ -68,7 +70,9 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
     graph.AddItem(yscale2);
 
     swrtrace = new GraphTrace(&graph,yscale1);
-    swrtrace->pen = pen2;  //TODO: tidy
+    //swrtrace->pen = pen2;  //TODO: tidy
+    swrtrace->pen = QPen(Qt::blue,3);
+
     graph.AddItem(swrtrace);
 
     swrminline = new GraphVertLine(&graph,xscale);
@@ -76,11 +80,14 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
     graph.AddItem(swrminline);
 
     ztrace = new GraphTrace(&graph,yscale2);
-    ztrace->pen = pen3;  //TODO: tidy
+    //ztrace->pen = pen3;  //TODO: tidy
+    ztrace->pen = QPen(QColor(255, 191, 0 ),3);
+
     graph.AddItem(ztrace);
 
     xtrace = new GraphTrace(&graph,yscale2);
-    xtrace->pen = QPen(Qt::red,0,Qt::DashLine);
+    //xtrace->pen = QPen(Qt::red,3,Qt::DashLine);
+    xtrace->pen = QPen(Qt::red,3);
     graph.AddItem(xtrace);
 
     //x2trace = new GraphTrace(&graph,yscale2);
@@ -88,7 +95,9 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
     //graph.AddItem(x2trace);
 
     rtrace = new GraphTrace(&graph,yscale2);
-    rtrace->pen = pen5;  //TODO: tidy
+    //rtrace->pen = pen5;  //TODO: tidy
+    rtrace->pen = QPen(Qt::green,3);
+
     graph.AddItem(rtrace);
 
     ZZeroLine = new GraphHorizLine(&graph,yscale2);
@@ -96,7 +105,7 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
     graph.AddItem(ZZeroLine);
 
     ZTargetline = new GraphHorizLine(&graph,yscale2);
-    ZTargetline->pen = QPen(QColor(255,85,0),0,Qt::DashLine);
+    ZTargetline->pen = QPen(QColor(255, 191, 0),0,Qt::DashLine);
     graph.AddItem(ZTargetline);
 
     SWRTargetline = new GraphHorizLine(&graph,yscale1);
@@ -123,7 +132,7 @@ void GraphCanvas::paintEvent(QPaintEvent *)
     ////////////////////
 
     painter.setBackgroundMode(Qt::OpaqueMode); //??
-    painter.setBackground(Qt::white);
+    //painter.setBackground(Qt::white);
     painter.eraseRect(painter.viewport());
 
     painter.setBackgroundMode(Qt::TransparentMode); //??

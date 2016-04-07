@@ -390,6 +390,58 @@
                 </property>
                </widget>
               </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>End</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Centre</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Span</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Start</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="1" colspan="2">
                <widget class="QComboBox" name="band_cb">
                 <item>
@@ -495,30 +547,17 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QLabel" name="fstep_disp">
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Points</string>
-                </property>
-               </widget>
-              </item>
               <item row="5" column="1">
                <widget class="QLabel" name="fend_disp">
                 <property name="text">
                  <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Band</string>
                 </property>
                </widget>
               </item>
@@ -535,19 +574,6 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Step</string>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="2">
                <widget class="QLabel" name="label_6">
                 <property name="sizePolicy">
@@ -558,19 +584,6 @@
                 </property>
                 <property name="text">
                  <string>MHz</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QLabel" name="label_9">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>KHz</string>
                 </property>
                </widget>
               </item>
@@ -613,8 +626,8 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_3">
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_4">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -622,76 +635,76 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>End</string>
+                 <string>Step</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Start</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Centre</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>Band</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_11">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Span</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QSpinBox" name="point_count">
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>999</number>
-                </property>
-                <property name="value">
-                 <number>100</number>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0" colspan="3">
+              <item row="9" column="0" colspan="3">
                <widget class="QCheckBox" name="useraw_chk">
                 <property name="text">
                  <string>Use raw bridge data</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="onno">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>1000</number>
+                </property>
+                <property name="singleStep">
+                 <number>1</number>
+                </property>
+                <property name="value">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Graph</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLabel" name="fstep_disp">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLabel" name="label_9">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>KHz</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLabel" name="abc"/>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_22">
+                <property name="text">
+                 <string>Scan</string>
                 </property>
                </widget>
               </item>
@@ -721,13 +734,22 @@
                <string>Plot</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_2">
+               <property name="leftMargin">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>6</number>
+               </property>
+               <property name="rightMargin">
+                <number>6</number>
+               </property>
+               <property name="bottomMargin">
+                <number>6</number>
+               </property>
                <property name="verticalSpacing">
                 <number>0</number>
                </property>
-               <property name="margin">
-                <number>6</number>
-               </property>
-               <item row="1" column="1">
+               <item row="2" column="1">
                 <widget class="QWidget" name="widget_5" native="true">
                  <property name="maximumSize">
                   <size>
@@ -738,33 +760,60 @@
                  <property name="palette">
                   <palette>
                    <active>
+                    <colorrole role="Base">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>243</red>
+                       <green>243</green>
+                       <blue>243</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
                     <colorrole role="Window">
                      <brush brushstyle="SolidPattern">
                       <color alpha="255">
                        <red>255</red>
-                       <green>85</green>
+                       <green>191</green>
                        <blue>0</blue>
                       </color>
                      </brush>
                     </colorrole>
                    </active>
                    <inactive>
+                    <colorrole role="Base">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>243</red>
+                       <green>243</green>
+                       <blue>243</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
                     <colorrole role="Window">
                      <brush brushstyle="SolidPattern">
                       <color alpha="255">
                        <red>255</red>
-                       <green>85</green>
+                       <green>191</green>
                        <blue>0</blue>
                       </color>
                      </brush>
                     </colorrole>
                    </inactive>
                    <disabled>
+                    <colorrole role="Base">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="255">
+                       <red>255</red>
+                       <green>191</green>
+                       <blue>0</blue>
+                      </color>
+                     </brush>
+                    </colorrole>
                     <colorrole role="Window">
                      <brush brushstyle="SolidPattern">
                       <color alpha="255">
                        <red>255</red>
-                       <green>85</green>
+                       <green>191</green>
                        <blue>0</blue>
                       </color>
                      </brush>
@@ -854,7 +903,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
+               <item row="4" column="1">
                 <widget class="QWidget" name="widget_6" native="true">
                  <property name="maximumSize">
                   <size>
@@ -904,7 +953,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
+               <item row="3" column="1">
                 <widget class="QWidget" name="widget_3" native="true">
                  <property name="maximumSize">
                   <size>
@@ -967,17 +1016,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="plotz_chk">
-                 <property name="text">
-                  <string>Z</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <widget class="QCheckBox" name="plotr_chk">
                  <property name="text">
                   <string>R</string>
@@ -987,10 +1026,20 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
+               <item row="4" column="0">
                 <widget class="QCheckBox" name="plotx_chk">
                  <property name="text">
                   <string>X</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="plotz_chk">
+                 <property name="text">
+                  <string>Z</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -1116,7 +1165,16 @@
                </size>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout">
-               <property name="margin">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
                 <number>0</number>
                </property>
                <item>
@@ -1239,7 +1297,7 @@
      <x>0</x>
      <y>0</y>
      <width>1179</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
