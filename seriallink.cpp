@@ -185,6 +185,10 @@ void SerialLink::Cmd_Scan(long fstart, long fend, long fstep, bool useraw,
 					} else {
 						sscanf(rxbuff, "%lf,%lf,%lf,%lf", &sample.swr,
 								&sample.R, &sample.X, &sample.Z);
+						erx->RaiseEvent2(EventReceiver::progress_event_freq,
+								frequency, 0.0);
+
+
 					}
 
 					scandata.points.push_back(sample);

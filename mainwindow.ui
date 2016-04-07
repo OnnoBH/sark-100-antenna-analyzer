@@ -1207,7 +1207,7 @@
                <item>
                 <widget class="QLabel" name="cursor_disp">
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string>Cursor data when graph is completed</string>
                  </property>
                 </widget>
                </item>
