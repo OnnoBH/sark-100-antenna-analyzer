@@ -726,13 +726,6 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="stopScan">
-                <property name="text">
-                 <string>Stop</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QPushButton" name="scanDummyBtn">
                 <property name="text">
                  <string>Test Data</string>
