@@ -34,6 +34,8 @@
 
 extern ScanData scandata;
 
+
+
 #ifdef ENABLE_DUMMY_DEV
 
 SerialLink::SerialLink(const char *dev,int speed) : DummyDev ()

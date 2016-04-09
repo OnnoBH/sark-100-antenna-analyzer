@@ -60,6 +60,8 @@ private:
 
 private slots:
     void Slot_scanBtn_click();
+    void Slot_stopScan_click();
+
 #ifdef ENABLE_TEST_DATA
     void Slot_scanDummyBtn_click();
 #endif

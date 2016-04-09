@@ -68,6 +68,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->canvas1, SIGNAL(cursorMoved(double)), this, SLOT(Slot_cursor_move(double)));
 
 	connect(ui->scanBtn, SIGNAL(clicked()), this, SLOT(Slot_scanBtn_click()));
+
+	connect(ui->stopScan, SIGNAL(clicked()), this,
+				SLOT(Slot_stopScan_click()));
+
+
 	connect(ui->scanDummyBtn, SIGNAL(clicked()), this,
 			SLOT(Slot_scanDummyBtn_click()));
 
@@ -226,6 +231,14 @@ void MainWindow::draw_graph1() {
 					(scandata.points[scandata.swr_bw_hi_idx].freq
 							- scandata.points[scandata.swr_bw_lo_idx].freq)
 							/ 1000000, 0, 'f', 2));
+
+}
+
+void MainWindow::Slot_stopScan_click() {
+	if (link->IsUp()) {
+
+		link->Cmd_Off();
+	}
 
 }
 
