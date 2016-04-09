@@ -69,8 +69,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->scanBtn, SIGNAL(clicked()), this, SLOT(Slot_scanBtn_click()));
 
-	connect(ui->stopScan, SIGNAL(clicked()), this,
-				SLOT(Slot_stopScan_click()));
 
 
 	connect(ui->scanDummyBtn, SIGNAL(clicked()), this,
