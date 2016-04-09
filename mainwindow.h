@@ -60,7 +60,10 @@ private:
 
 private slots:
     void Slot_scanBtn_click();
-    void Slot_stopScan_click();
+
+    void Slot_syncCentre_click();
+    void Slot_manual_click();
+
 
 #ifdef ENABLE_TEST_DATA
     void Slot_scanDummyBtn_click();
@@ -73,6 +76,13 @@ private slots:
     void Slot_plot_change(int);
     void Slot_menuDevice_Show();
     void Slot_menuDevice_Select(QAction *act);
+
+    void Slot_mhz_change();
+    void Slot_khz100_change();
+    void Slot_khz10_change();
+    void Slot_khz_change();
+
+
     void Slot_Load();
     void Slot_Save();
     void Slot_Settings();
