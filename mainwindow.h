@@ -53,8 +53,10 @@ private:
     void Auto_connect_device();
 
     void update_fstep();
-    void draw_graph1();
+    void draw_graph1(int fraction);
     void populate_table();
+    int setFraction(int fraction);
+
     void toDom(QDomDocument &doc);
     void fromDom(QDomElement &e0);
 
@@ -65,12 +67,13 @@ private slots:
     void Slot_scanBtn_click();
 
     void Slot_syncCentre_click();
-    void Slot_manual_click();
+    void Slot_button5khz_click();
+    void Slot_button20khz_click();
+    void Slot_button50khz_click();
+    void Slot_button100khz_click();
 
+    void Slot_khzScan(float factor, int stepSize);
 
-#ifdef ENABLE_TEST_DATA
-    void Slot_scanDummyBtn_click();
-#endif
     void Slot_cursor_move(double pos);
     void Slot_band_change(int idx);
     void Slot_fcentre_change(double v);

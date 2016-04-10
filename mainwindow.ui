@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1179</width>
-    <height>711</height>
+    <height>832</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -498,7 +498,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Centre</string>
+                 <string>Center</string>
                 </property>
                </widget>
               </item>
@@ -831,14 +831,35 @@
             <item>
              <widget class="QPushButton" name="syncCentre">
               <property name="text">
-               <string>Sync centre with lowest swr point</string>
+               <string>Sync center with lowest swr point</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="manual">
+             <widget class="QPushButton" name="pushButton5khz">
               <property name="text">
-               <string>+/- 5Khz sweep around centre freq</string>
+               <string>+/- 5Khz sweep around center freq</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton20khz">
+              <property name="text">
+               <string>+/- 20Khz sweep around center freq</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton50khz">
+              <property name="text">
+               <string>+/- 50Khz sweep around center freq</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton100khz">
+              <property name="text">
+               <string>+/- 100Khz sweep around center freq</string>
               </property>
              </widget>
             </item>

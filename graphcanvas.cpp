@@ -34,8 +34,6 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
 
     QPen pen1(Qt::black), pen2(Qt::blue), pen3(QColor(255, 191, 0 )), pen4(Qt::red), pen5(Qt::green);
 
-
-
     pen1.setWidth(0);
     pen2.setWidth(0);
     pen3.setWidth(0);
@@ -48,6 +46,7 @@ GraphCanvas::GraphCanvas(QWidget *parent) :
     xscale->pen = pen1;  //TODO: tidy
     xscale->font = font;
     xscale->labdps = 1;
+    //xscale->labdiv = 1000000;
     xscale->labdiv = 1000000;
     graph.AddItem(xscale);
 

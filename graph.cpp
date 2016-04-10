@@ -174,6 +174,7 @@ void GraphScale::SetIncAuto()
     if (span<=n) { this->vinc=n/10.0; goto done; } else n*=2.5;
     if (span<=n) { this->vinc=n/10.0; goto done; } else n*=2;
     this->vinc=n/10.0;
+
 done:
     if (this->vinc==0.0) vinc=1.0; //Safty setting for vinc to prevent infinite loop / dev by 0 downstream.
 }

@@ -46,7 +46,6 @@ MainWindow::MainWindow(QWidget *parent) :
 //std::setlocale(LC_ALL, "sv_SE");
 //}
 
-
 	Config::read();
 
 	ui->setupUi(this);
@@ -73,7 +72,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->scanBtn, SIGNAL(clicked()), this, SLOT(Slot_scanBtn_click()));
 
-
 	connect(ui->copyBtn, SIGNAL(clicked()), this, SLOT(Slot_copy()));
 
 	connect(ui->band_cb, SIGNAL(currentIndexChanged(int)), this,
@@ -88,8 +86,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->syncCentre, SIGNAL(clicked()), this,
 			SLOT(Slot_syncCentre_click()));
-	connect(ui->manual, SIGNAL(clicked()), this, SLOT(Slot_manual_click()));
 
+	connect(ui->pushButton5khz, SIGNAL(clicked()), this,
+			SLOT(Slot_button5khz_click()));
+
+	connect(ui->pushButton20khz, SIGNAL(clicked()), this,
+			SLOT(Slot_button20khz_click()));
+	connect(ui->pushButton50khz, SIGNAL(clicked()), this,
+			SLOT(Slot_button50khz_click()));
+	connect(ui->pushButton100khz, SIGNAL(clicked()), this,
+			SLOT(Slot_button100khz_click()));
 
 	connect(ui->mhz, SIGNAL(toggled(bool)), this, SLOT(Slot_mhz_change()));
 	connect(ui->khz100, SIGNAL(toggled(bool)), this,
@@ -107,8 +113,6 @@ MainWindow::MainWindow(QWidget *parent) :
 		connect(ctrls[i], SIGNAL(stateChanged(int)), this,
 				SLOT(Slot_plot_change(int)));
 
-
-
 	link = new SerialLink("/dev/ttyUSB0", 57600);
 	if (link->IsUp())
 		link->Cmd_Off();
@@ -118,7 +122,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->scan_data->setHorizontalHeaderLabels(
 			QStringList() << "freq" << "SWR" << "Z" << "R" << "X");
 
-
 	ui->canvas1->cursor = ui->cursor;
 
 	ui->tabWidget->setCurrentIndex(1);
@@ -126,8 +129,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	montimer.setParent(this);
 	connect(&montimer, SIGNAL(timeout()), this, SLOT(Slot_montimer_timeout()));
-
-
 
 //std::setlocale(LC_ALL, "sv_SE.UTF-8");
 }
@@ -142,7 +143,7 @@ void MainWindow::RaiseEvent(event_t event, int arg) {
 	switch (event) {
 	case progress_event:
 		ui->progressBar->setValue(arg);
-		draw_graph1();
+		draw_graph1(setFraction(scandata.GetPointCount()));
 		break;
 	}
 }
@@ -178,13 +179,14 @@ void MainWindow::populate_table() {
 	}
 }
 
-void MainWindow::draw_graph1() {
+void MainWindow::draw_graph1(int fraction) {
 	GraphScale *scale;
 	//double n;
 
 	scale = ui->canvas1->xscale;
 	scale->vmin = scandata.freq_start;
 	scale->vmax = scandata.freq_end;
+	scale->labdps = fraction;
 	scale->SetIncAuto();
 
 	scale = ui->canvas1->yscale1;
@@ -267,318 +269,353 @@ void MainWindow::Slot_syncCentre_click() {
 	ui->fcentre->setValue(freq);
 }
 
-void MainWindow::Slot_manual_click() {
-scandata.freq_start = (ui->fcentre->value() - 0.005)
-		* 1000000;
-scandata.freq_end = (ui->fcentre->value() + 0.005) * 1000000;
-scandata.SetPointCount(20);
+void MainWindow::Slot_button5khz_click() {
 
-//update_fstep();
-
-if (link->IsUp()) {
-
-	link->Cmd_Scan((long) (scandata.freq_start), (long) (scandata.freq_end),
-			(long) (500),
-			ui->useraw_chk->checkState() == Qt::Checked, this);
-	link->Cmd_Off();
-}
-
-populate_table();
-draw_graph1();
-
-ui->canvas1->update();
+	float factor = 0.005;
+	Slot_khzScan(factor, 500);
 
 }
 
+void MainWindow::Slot_button20khz_click() {
 
+	float factor = 0.020;
+	Slot_khzScan(factor, 500);
+}
 
+void MainWindow::Slot_button50khz_click() {
+	float factor = 0.050;
+	Slot_khzScan(factor, 1000);
+}
+
+void MainWindow::Slot_button100khz_click() {
+	float factor = 0.1;
+	Slot_khzScan(factor, 1000);
+}
+
+void MainWindow::Slot_khzScan(float factor, int stepSize) {
+
+	scandata.freq_start = (ui->fcentre->value() - factor) * 1000000;
+	scandata.freq_end = (ui->fcentre->value() + factor) * 1000000;
+
+	int count = factor * stepSize * 2;
+	scandata.SetPointCount(count);
+
+	if (link->IsUp()) {
+
+		link->Cmd_Scan((long) (scandata.freq_start), (long) (scandata.freq_end),
+				(long) (stepSize), ui->useraw_chk->checkState() == Qt::Checked,
+				this);
+		link->Cmd_Off();
+	}
+
+	populate_table();
+
+	draw_graph1(setFraction(count));
+
+	ui->canvas1->update();
+}
+
+int MainWindow::setFraction(int points) {
+
+	int fraction = 1;
+	if (points <= 200) {
+		fraction = 3;
+		return fraction;
+	}
+	if (points <= 300) {
+		fraction = 2;
+	}
+
+	return fraction;
+}
 
 void MainWindow::Slot_scanBtn_click() {
-scandata.freq_start = (ui->fcentre->value() - ui->fspan->value() / 2.0)
-		* 1000000;
-scandata.freq_end = (ui->fcentre->value() + ui->fspan->value() / 2.0) * 1000000;
-scandata.SetPointCount(ui->fspan->value() * 1000 / ui->onno->value());
+	scandata.freq_start = (ui->fcentre->value() - ui->fspan->value() / 2.0)
+			* 1000000;
+	scandata.freq_end = (ui->fcentre->value() + ui->fspan->value() / 2.0)
+			* 1000000;
+	scandata.SetPointCount(ui->fspan->value() * 1000 / ui->onno->value());
 
-update_fstep();
+	update_fstep();
 
-if (link->IsUp()) {
+	if (link->IsUp()) {
 
-	link->Cmd_Scan((long) (scandata.freq_start), (long) (scandata.freq_end),
-			(long) (ui->onno->value() * 1000),
-			ui->useraw_chk->checkState() == Qt::Checked, this);
-	link->Cmd_Off();
+		link->Cmd_Scan((long) (scandata.freq_start), (long) (scandata.freq_end),
+				(long) (ui->onno->value() * 1000),
+				ui->useraw_chk->checkState() == Qt::Checked, this);
+		link->Cmd_Off();
+	}
+
+	populate_table();
+	draw_graph1(setFraction(scandata.GetPointCount()));
+
 }
-
-populate_table();
-draw_graph1();
-}
-
-
 
 void MainWindow::Slot_cursor_move(double pos) {
 //printf("pos=%lf\n",pos);
-int n = pos * (double) (scandata.points.size() - 1);
+	int n = pos * (double) (scandata.points.size() - 1);
 
-if (n < 0 || n >= scandata.GetPointCount())
-	return;
+	if (n < 0 || n >= scandata.GetPointCount())
+		return;
 
-Sample *sample = &scandata.points[n];
+	Sample *sample = &scandata.points[n];
 
-ui->cursor_disp->setText(
-		QString("f=%1MHz, swr=%2, Z=%3%4").arg(sample->freq / 1000000).arg(
-				sample->swr, 0, 'f', 2).arg(sample->Z, 0, 'f', 2).arg(
-				QChar(0x03A9)));
+	ui->cursor_disp->setText(
+			QString("f=%1MHz, swr=%2, Z=%3%4").arg(sample->freq / 1000000).arg(
+					sample->swr, 0, 'f', 2).arg(sample->Z, 0, 'f', 2).arg(
+					QChar(0x03A9)));
 }
 
 void MainWindow::set_band(double f, double span) {
-ui->fcentre->setValue(f);
-ui->fspan->setValue(span);
+	ui->fcentre->setValue(f);
+	ui->fspan->setValue(span);
 }
 
 void MainWindow::set_scan_disp() {
 
-ui->fstart_disp->setText(
-		QString("%1").arg(ui->fcentre->value() - ui->fspan->value() / 2.0));
-ui->fend_disp->setText(
-		QString("%1").arg(ui->fcentre->value() + ui->fspan->value() / 2.0));
+	ui->fstart_disp->setText(
+			QString("%1").arg(ui->fcentre->value() - ui->fspan->value() / 2.0));
+	ui->fend_disp->setText(
+			QString("%1").arg(ui->fcentre->value() + ui->fspan->value() / 2.0));
 
-update_fstep();
+	update_fstep();
 
 }
 
 void MainWindow::update_fstep() {
-int roundedUp = ceil(ui->fspan->value() * 1000 / ui->onno->value());
-QString b = QString::number(roundedUp);
-ui->fstep_disp->setText(QString("%1 %2").arg(b).arg("data points"));
+	int roundedUp = ceil(ui->fspan->value() * 1000 / ui->onno->value());
+	QString b = QString::number(roundedUp);
+	ui->fstep_disp->setText(QString("%1 %2").arg(b).arg("data points"));
 
 }
 
 void MainWindow::Slot_band_change(int idx) {
-ui->band_cb->blockSignals(true);
-ui->fcentre->blockSignals(true);
-ui->fspan->blockSignals(true);
+	ui->band_cb->blockSignals(true);
+	ui->fcentre->blockSignals(true);
+	ui->fspan->blockSignals(true);
 
-switch (idx) {
-case 0:
-	break;
-case 1:
-	set_band(1.5, 1.0);
-	break;     //160m
-case 2:
-	set_band(3.6, 0.5);
-	break;     //80m
-case 3:
-	set_band(7.1, 0.2);
-	break;     //40m
-case 4:
-	set_band(10.1, 0.2);
-	break;     //30m
-case 5:
-	set_band(12.9, 0.2);
-	break;    //25m
-case 6:
-	set_band(14.1, 0.2);
-	break;    //20m
-case 7:
-	set_band(18.1, 0.2);
-	break;    //17m
-case 8:
-	set_band(21.1, 0.2);
-	break; //15m
-case 9:
-	set_band(24.9, 0.2);
-	break; //12m
-case 10:
-	set_band(27.0, 2.0);
-	break;  //11m
-case 11:
-	set_band(28.5, 1);
-	break;  //10m
-case 12:
-	set_band(29.5, 1);
-	break;  //10m
-case 13:
-	set_band(40, 18.0);
-	break;      //8m
-case 14:
-	set_band(50.5, 0.5);
-	break;      //6m
-case 15:
-	set_band(30.5, 59.0);
-	break; // test
-case 16:
-	set_band(16.5, 27.0);
-	break;
-case 17:
-	set_band(27.5, 5.0);
-	break;
-}
+	switch (idx) {
+	case 0:
+		break;
+	case 1:
+		set_band(1.5, 1.0);
+		break;     //160m
+	case 2:
+		set_band(3.6, 0.5);
+		break;     //80m
+	case 3:
+		set_band(7.1, 0.2);
+		break;     //40m
+	case 4:
+		set_band(10.1, 0.2);
+		break;     //30m
+	case 5:
+		set_band(12.9, 0.2);
+		break;    //25m
+	case 6:
+		set_band(14.1, 0.2);
+		break;    //20m
+	case 7:
+		set_band(18.1, 0.2);
+		break;    //17m
+	case 8:
+		set_band(21.1, 0.2);
+		break; //15m
+	case 9:
+		set_band(24.9, 0.2);
+		break; //12m
+	case 10:
+		set_band(27.0, 2.0);
+		break;  //11m
+	case 11:
+		set_band(28.5, 1);
+		break;  //10m
+	case 12:
+		set_band(29.5, 1);
+		break;  //10m
+	case 13:
+		set_band(40, 18.0);
+		break;      //8m
+	case 14:
+		set_band(50.5, 0.5);
+		break;      //6m
+	case 15:
+		set_band(30.5, 59.0);
+		break; // test
+	case 16:
+		set_band(16.5, 27.0);
+		break;
+	case 17:
+		set_band(27.5, 5.0);
+		break;
+	}
 
-ui->band_cb->blockSignals(false);
-ui->fcentre->blockSignals(false);
-ui->fspan->blockSignals(false);
-set_scan_disp();
+	ui->band_cb->blockSignals(false);
+	ui->fcentre->blockSignals(false);
+	ui->fspan->blockSignals(false);
+	set_scan_disp();
 }
 
 void MainWindow::Slot_fcentre_change(double v) {
-ui->fcentre->blockSignals(true);
+	ui->fcentre->blockSignals(true);
 
-double n = ui->fspan->value() / 2.0;
-if ((v - n) < 1.0) {
-	v = 1.0 + n;
-	ui->fcentre->setValue(v);
+	double n = ui->fspan->value() / 2.0;
+	if ((v - n) < 1.0) {
+		v = 1.0 + n;
+		ui->fcentre->setValue(v);
 
-}
-if ((v + n) > 60.0) {
-	v = 60.0 - n;
-	ui->fcentre->setValue(v);
+	}
+	if ((v + n) > 60.0) {
+		v = 60.0 - n;
+		ui->fcentre->setValue(v);
 
-}
-ui->band_cb->setCurrentIndex(0);
+	}
+	ui->band_cb->setCurrentIndex(0);
 
-ui->fcentre->blockSignals(false);
+	ui->fcentre->blockSignals(false);
 
-set_scan_disp();
+	set_scan_disp();
 }
 
 void MainWindow::Slot_fspan_change(double v) {
-ui->fspan->blockSignals(true);
+	ui->fspan->blockSignals(true);
 
-double centre = ui->fcentre->value();
-if ((centre - v / 2.0) < 1.0) {
-	v = 2.0 * (centre - 1);
-	ui->fspan->setValue(v);
-}
-if ((centre + v / 2.0) > 60.0) {
-	v = 2.0 * (60.0 - centre);
-	ui->fspan->setValue(v);
-}
-ui->band_cb->setCurrentIndex(0);
+	double centre = ui->fcentre->value();
+	if ((centre - v / 2.0) < 1.0) {
+		v = 2.0 * (centre - 1);
+		ui->fspan->setValue(v);
+	}
+	if ((centre + v / 2.0) > 60.0) {
+		v = 2.0 * (60.0 - centre);
+		ui->fspan->setValue(v);
+	}
+	ui->band_cb->setCurrentIndex(0);
 
-ui->fspan->blockSignals(false);
-set_scan_disp();
+	ui->fspan->blockSignals(false);
+	set_scan_disp();
 }
 
 void MainWindow::Slot_point_count_change(int) {
-set_scan_disp();
+	set_scan_disp();
 }
 
 void MainWindow::Slot_onno_change(int x) {
-scandata.SetPointCount(ui->fspan->value() * 1000 / x);
-set_scan_disp();
+	scandata.SetPointCount(ui->fspan->value() * 1000 / x);
+	set_scan_disp();
 }
 
 void MainWindow::Slot_plot_change(int) {
-ui->canvas1->ztrace->enabled = ui->plotz_chk->checkState() == Qt::Checked;
-ui->canvas1->xtrace->enabled = ui->plotx_chk->checkState() == Qt::Checked;
-ui->canvas1->rtrace->enabled = ui->plotr_chk->checkState() == Qt::Checked;
-draw_graph1();
+	ui->canvas1->ztrace->enabled = ui->plotz_chk->checkState() == Qt::Checked;
+	ui->canvas1->xtrace->enabled = ui->plotx_chk->checkState() == Qt::Checked;
+	ui->canvas1->rtrace->enabled = ui->plotr_chk->checkState() == Qt::Checked;
+	draw_graph1(setFraction(scandata.GetPointCount()));
 //  ui->canvas1->update();
 }
 
 void MainWindow::Slot_Load() {
-QString fileName = QFileDialog::getOpenFileName(this, "Open Layout",
-		Config::dir_data, "Scan Data (*.analyzer)");
-if (!fileName.isEmpty()) {
-	QDomDocument doc("AnalyzerML");
-	QFile file(fileName);
-	if (!file.open(QIODevice::ReadOnly)) {
-		QMessageBox::warning(this, tr("Analyzer"),
-				tr("Cannot read file %1:\n%2.").arg(fileName).arg(
-						file.errorString()));
-		return;
-	}
-	if (!doc.setContent(&file)) {
+	QString fileName = QFileDialog::getOpenFileName(this, "Open Layout",
+			Config::dir_data, "Scan Data (*.analyzer)");
+	if (!fileName.isEmpty()) {
+		QDomDocument doc("AnalyzerML");
+		QFile file(fileName);
+		if (!file.open(QIODevice::ReadOnly)) {
+			QMessageBox::warning(this, tr("Analyzer"),
+					tr("Cannot read file %1:\n%2.").arg(fileName).arg(
+							file.errorString()));
+			return;
+		}
+		if (!doc.setContent(&file)) {
+			file.close();
+			return;
+		}
 		file.close();
-		return;
+
+		QDomElement root = doc.documentElement();
+		if (root.tagName() != "analyzer") {
+			QMessageBox::warning(this, "Analyzer",
+					"Cannot load file\nThis is not a valid analyzer file.");
+			return;
+		}
+
+		fromDom(root);
+
+		//setCurrentFile(fileName);
+
+		//fileName.replace('\\','/');
+		//addRecentFile(fileName);
+		QFileInfo fi(fileName);
+		if (Config::dir_data != fi.dir().path()) {
+			Config::dir_data = fi.dir().path();
+			Config::write();
+		}
+
+		populate_table();
+		draw_graph1(setFraction(scandata.GetPointCount()));
+
+		ui->fcentre->setValue(
+				(scandata.freq_end + scandata.freq_start) / 2000000.0);
+		ui->fspan->setValue(
+				(scandata.freq_end - scandata.freq_start) / 1000000.0);
+
+		statusBar()->showMessage(tr("Analyzer data loaded"), 5000);
 	}
-	file.close();
-
-	QDomElement root = doc.documentElement();
-	if (root.tagName() != "analyzer") {
-		QMessageBox::warning(this, "Analyzer",
-				"Cannot load file\nThis is not a valid analyzer file.");
-		return;
-	}
-
-	fromDom(root);
-
-	//setCurrentFile(fileName);
-
-	//fileName.replace('\\','/');
-	//addRecentFile(fileName);
-	QFileInfo fi(fileName);
-	if (Config::dir_data != fi.dir().path()) {
-		Config::dir_data = fi.dir().path();
-		Config::write();
-	}
-
-	populate_table();
-	draw_graph1();
-
-	ui->fcentre->setValue(
-			(scandata.freq_end + scandata.freq_start) / 2000000.0);
-	ui->fspan->setValue((scandata.freq_end - scandata.freq_start) / 1000000.0);
-
-	statusBar()->showMessage(tr("Analyzer data loaded"), 5000);
-}
 }
 
 void MainWindow::fromDom(QDomElement &e0) {
 //freq_start = e0.attribute("fstart", "0").toDouble();
 
-for (QDomNode n1 = e0.firstChild(); !n1.isNull(); n1 = n1.nextSibling()) {
-	if (!n1.isElement())
-		continue;  // Skip any non-element nodes
+	for (QDomNode n1 = e0.firstChild(); !n1.isNull(); n1 = n1.nextSibling()) {
+		if (!n1.isElement())
+			continue;  // Skip any non-element nodes
 
-	QDomElement e1 = n1.toElement();
+		QDomElement e1 = n1.toElement();
 
-	if (e1.tagName() == "scandata")
-		scandata.fromDom(e1);
-	else if (e1.tagName() == "notes")
-		ui->notes_txt->setPlainText(e1.text());
-}
+		if (e1.tagName() == "scandata")
+			scandata.fromDom(e1);
+		else if (e1.tagName() == "notes")
+			ui->notes_txt->setPlainText(e1.text());
+	}
 }
 
 void MainWindow::toDom(QDomDocument &doc) {
-QDomElement element = doc.createElement("analyzer");
+	QDomElement element = doc.createElement("analyzer");
 
-toDom_Text(doc, element, "notes", ui->notes_txt->toPlainText());
+	toDom_Text(doc, element, "notes", ui->notes_txt->toPlainText());
 
-scandata.toDom(doc, element);
+	scandata.toDom(doc, element);
 
-doc.appendChild(element);
+	doc.appendChild(element);
 }
 
 void MainWindow::Slot_Save() {
-QString filename = QFileDialog::getSaveFileName(this, "Save Scan Data As",
-		Config::dir_data, "Scan Data (*.analyzer)");
-if (filename.isEmpty())
-	return;
+	QString filename = QFileDialog::getSaveFileName(this, "Save Scan Data As",
+			Config::dir_data, "Scan Data (*.analyzer)");
+	if (filename.isEmpty())
+		return;
 
 //    if (!copy)
 //      setCurrentFile(fileName);	// Set filename & layoutname here because layoutname is written to the file.
 
-QDomDocument doc("AnalyzerML");
+	QDomDocument doc("AnalyzerML");
 
-toDom(doc);
+	toDom(doc);
 
-QFile file(filename);
-if (!file.open(QIODevice::WriteOnly))
-	return;
+	QFile file(filename);
+	if (!file.open(QIODevice::WriteOnly))
+		return;
 
-QTextStream ts(&file);
-ts.setCodec(Config::DOM_ENCODING); //If we always save as UTF-8 unicode filenames should work. Othewise on windows it saves in some other encoding.
-ts << doc.toString();
+	QTextStream ts(&file);
+	ts.setCodec(Config::DOM_ENCODING); //If we always save as UTF-8 unicode filenames should work. Othewise on windows it saves in some other encoding.
+	ts << doc.toString();
 
-file.close();
+	file.close();
 //statusBar()->showMessage(tr("Data saved"), 2000);
 
-QFileInfo fi(filename);
-if (Config::dir_data != fi.dir().path()) {
-	Config::dir_data = fi.dir().path();
-	Config::write();
-}
+	QFileInfo fi(filename);
+	if (Config::dir_data != fi.dir().path()) {
+		Config::dir_data = fi.dir().path();
+		Config::write();
+	}
 }
 
 void MainWindow::Auto_connect_device() {
@@ -591,11 +628,9 @@ void MainWindow::Auto_connect_device() {
 
 	//printf("auto: %1\n", dir[0]);
 
-
 	//ui->menuDevice->clear();
 	//for (i = 0; i < dir.count(); i++)
 	//	ui->menuDevice->addAction(dir[i]);
-
 
 	if (link)
 		delete link;
@@ -605,122 +640,122 @@ void MainWindow::Auto_connect_device() {
 	if (link->IsUp())
 		link->Cmd_Off();
 
-
 }
 
-
 void MainWindow::Slot_menuDevice_Show() {
-unsigned int i;
+	unsigned int i;
 //QDir dir("/dev","ttyUSB*");
-QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
-		QDir::System);
+	QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
+			QDir::System);
 
-printf("dir: %d\n", dir.count());
+	printf("dir: %d\n", dir.count());
 
-ui->menuDevice->clear();
-for (i = 0; i < dir.count(); i++)
-	ui->menuDevice->addAction(dir[i]);
+	ui->menuDevice->clear();
+	for (i = 0; i < dir.count(); i++)
+		ui->menuDevice->addAction(dir[i]);
 }
 
 void MainWindow::Slot_menuDevice_Select(QAction *act) {
-if (link)
-	delete link;
+	if (link)
+		delete link;
 
-link = new SerialLink(QString("/dev/" + act->text()).toLatin1().data(), 57600);
+	link = new SerialLink(QString("/dev/" + act->text()).toLatin1().data(),
+			57600);
 
-if (link->IsUp())
-	link->Cmd_Off();
+	if (link->IsUp())
+		link->Cmd_Off();
 }
 
 void MainWindow::Slot_about() {
-QMessageBox::about(this, "About Antenna Analyzer",
-		QString(
-				"Antenna Analyzer - scanning &amp; graph plotting program for the SARK100 antenna analyzer.<br><br>"
-						"Version %1.%2.%3 %4<br><br>"
-						"&copy; 2015 jedi98.uk").arg(version.major).arg(
-				version.minor).arg(version.build).arg(version.subversion));
+	QMessageBox::about(this, "About Antenna Analyzer",
+			QString(
+					"Antenna Analyzer - scanning &amp; graph plotting program for the SARK100 antenna analyzer.<br><br>"
+							"Version %1.%2.%3 %4<br><br>"
+							"&copy; 2015 jedi98.uk").arg(version.major).arg(
+					version.minor).arg(version.build).arg(version.subversion));
 }
 
 void MainWindow::Slot_Settings() {
-SettingsDlg dlg;
+	SettingsDlg dlg;
 
-if (dlg.exec() == QDialog::Accepted) {
-	scandata.UpdateStats();
-	draw_graph1();
-}
+	if (dlg.exec() == QDialog::Accepted) {
+		scandata.UpdateStats();
+		draw_graph1(setFraction(scandata.GetPointCount()));
+	}
 }
 
 void MainWindow::Slot_copy() {
-QString txt("freq\tSWR\tZ\tR\tX\n");
+	QString txt("freq\tSWR\tZ\tR\tX\n");
 
-for (unsigned int i = 0; i < scandata.points.size(); i++)
-	txt += QString("%1\t%2\t%3\t%4\n").arg(scandata.points[i].freq / 1000000.0,
-			0, 'f').arg(scandata.points[i].swr).arg(scandata.points[i].Z).arg(
-			scandata.points[i].R).arg(scandata.points[i].X);
+	for (unsigned int i = 0; i < scandata.points.size(); i++)
+		txt += QString("%1\t%2\t%3\t%4\n").arg(
+				scandata.points[i].freq / 1000000.0, 0, 'f').arg(
+				scandata.points[i].swr).arg(scandata.points[i].Z).arg(
+				scandata.points[i].R).arg(scandata.points[i].X);
 
-qApp->clipboard()->setText(txt);
+	qApp->clipboard()->setText(txt);
 }
 
 void MainWindow::Slot_monStart_click() {
-ui->SWR_Bar->vmin = ui->SWR_Bar->vorig = 1;
-ui->SWR_Bar->vmax = 10;
-ui->SWR_Bar->SetIncAuto();
-ui->SWR_Bar->value = 1;
+	ui->SWR_Bar->vmin = ui->SWR_Bar->vorig = 1;
+	ui->SWR_Bar->vmax = 10;
+	ui->SWR_Bar->SetIncAuto();
+	ui->SWR_Bar->value = 1;
 
-ui->Z_Bar->brush = QBrush(qRgb(255, 85, 0));
-ui->Z_Bar->vmin = 0;
-ui->Z_Bar->vmax = 200;
-ui->Z_Bar->value = 50;
-ui->Z_Bar->SetIncAuto();
+	ui->Z_Bar->brush = QBrush(qRgb(255, 85, 0));
+	ui->Z_Bar->vmin = 0;
+	ui->Z_Bar->vmax = 200;
+	ui->Z_Bar->value = 50;
+	ui->Z_Bar->SetIncAuto();
 
-ui->R_Bar->brush = QBrush(Qt::darkGreen);
-ui->R_Bar->vmin = 0;
-ui->R_Bar->vmax = 200;
-ui->R_Bar->value = 50;
-ui->R_Bar->SetIncAuto();
+	ui->R_Bar->brush = QBrush(Qt::darkGreen);
+	ui->R_Bar->vmin = 0;
+	ui->R_Bar->vmax = 200;
+	ui->R_Bar->value = 50;
+	ui->R_Bar->SetIncAuto();
 
-ui->X_Bar->brush = QBrush(Qt::red);
-ui->X_Bar->vmin = -100;
-ui->X_Bar->vmax = 200;
-ui->X_Bar->value = 0;
-ui->X_Bar->SetIncAuto();
+	ui->X_Bar->brush = QBrush(Qt::red);
+	ui->X_Bar->vmin = -100;
+	ui->X_Bar->vmax = 200;
+	ui->X_Bar->value = 0;
+	ui->X_Bar->SetIncAuto();
 
-if (link->IsUp()) {
-	link->Cmd_Freq((long) (ui->monfreq->value() * 1000000));
-	link->Cmd_On();
-}
+	if (link->IsUp()) {
+		link->Cmd_Freq((long) (ui->monfreq->value() * 1000000));
+		link->Cmd_On();
+	}
 
-Slot_montimer_timeout();
-montimer.start((long) (ui->monrate->value()));
+	Slot_montimer_timeout();
+	montimer.start((long) (ui->monrate->value()));
 }
 
 void MainWindow::Slot_monStop_click() {
-montimer.stop();
+	montimer.stop();
 
-if (link->IsUp())
-	link->Cmd_Off();
+	if (link->IsUp())
+		link->Cmd_Off();
 }
 
 void MainWindow::Slot_montimer_timeout() {
-Sample sample;
+	Sample sample;
 
-if (link->IsUp()) {
-	link->Cmd_Raw(sample);
+	if (link->IsUp()) {
+		link->Cmd_Raw(sample);
 
-	ui->SWR_lbl->setText(QString("%1:1").arg(sample.swr, 0, 'f', 1));
-	ui->SWR_Bar->value = sample.swr;
-	ui->SWR_Bar->update();
+		ui->SWR_lbl->setText(QString("%1:1").arg(sample.swr, 0, 'f', 1));
+		ui->SWR_Bar->value = sample.swr;
+		ui->SWR_Bar->update();
 
-	ui->Z_lbl->setText(QString("%1").arg(sample.Z, 0, 'f', 1));
-	ui->Z_Bar->value = sample.Z;
-	ui->Z_Bar->update();
+		ui->Z_lbl->setText(QString("%1").arg(sample.Z, 0, 'f', 1));
+		ui->Z_Bar->value = sample.Z;
+		ui->Z_Bar->update();
 
-	ui->R_lbl->setText(QString("%1").arg(sample.R, 0, 'f', 1));
-	ui->R_Bar->value = sample.R;
-	ui->R_Bar->update();
+		ui->R_lbl->setText(QString("%1").arg(sample.R, 0, 'f', 1));
+		ui->R_Bar->value = sample.R;
+		ui->R_Bar->update();
 
-	ui->X_lbl->setText(QString("%1").arg(sample.X, 0, 'f', 1));
-	ui->X_Bar->value = sample.X;
-	ui->X_Bar->update();
-}
+		ui->X_lbl->setText(QString("%1").arg(sample.X, 0, 'f', 1));
+		ui->X_Bar->value = sample.X;
+		ui->X_Bar->update();
+	}
 }
