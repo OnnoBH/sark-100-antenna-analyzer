@@ -74,7 +74,7 @@ SerialDev::SerialDev(const char *dev,int speed)
 
 SerialDev::~SerialDev()
 {
-  if (devfd != -1)
+	if (devfd != -1)
     close(devfd);
 }
 
@@ -168,7 +168,7 @@ int SerialDev::RxLine()
 
 bool SerialDev::IsUp()
 {
-   return devfd != -1;
+	return devfd != -1;
 }
 
 void SerialDev::TxData(const void *buf, size_t count)

@@ -38,6 +38,7 @@ class MainWindow : public QMainWindow, public EventReceiver
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
     void RaiseEvent(event_t event, int arg);
     void RaiseEvent2(event_t2 event, float freq, float swr);
 
@@ -49,6 +50,8 @@ public:
 private:
     void set_band(double f, double span);
     void set_scan_disp();
+    void Auto_connect_device();
+
     void update_fstep();
     void draw_graph1();
     void populate_table();

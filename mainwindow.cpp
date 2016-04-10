@@ -45,10 +45,12 @@ MainWindow::MainWindow(QWidget *parent) :
 //if (p) printf("\t%s\n",p);
 //std::setlocale(LC_ALL, "sv_SE");
 //}
+
+
 	Config::read();
 
 	ui->setupUi(this);
-	ui->statusBar->addWidget(ui->progressBar);
+	//ui->statusBar->addWidget(ui->progressBar);
 
 	setWindowTitle(Config::App);
 
@@ -71,9 +73,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->scanBtn, SIGNAL(clicked()), this, SLOT(Slot_scanBtn_click()));
 
-
-	connect(ui->scanDummyBtn, SIGNAL(clicked()), this,
-			SLOT(Slot_scanDummyBtn_click()));
 
 	connect(ui->copyBtn, SIGNAL(clicked()), this, SLOT(Slot_copy()));
 
@@ -108,6 +107,8 @@ MainWindow::MainWindow(QWidget *parent) :
 		connect(ctrls[i], SIGNAL(stateChanged(int)), this,
 				SLOT(Slot_plot_change(int)));
 
+
+
 	link = new SerialLink("/dev/ttyUSB0", 57600);
 	if (link->IsUp())
 		link->Cmd_Off();
@@ -117,11 +118,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->scan_data->setHorizontalHeaderLabels(
 			QStringList() << "freq" << "SWR" << "Z" << "R" << "X");
 
-#ifdef ENABLE_TEST_DATA
-	Slot_scanDummyBtn_click();
-#else
-	ui->scanDummyBtn->setVisible(false);
-#endif
 
 	ui->canvas1->cursor = ui->cursor;
 
@@ -131,12 +127,15 @@ MainWindow::MainWindow(QWidget *parent) :
 	montimer.setParent(this);
 	connect(&montimer, SIGNAL(timeout()), this, SLOT(Slot_montimer_timeout()));
 
+
+
 //std::setlocale(LC_ALL, "sv_SE.UTF-8");
 }
 
 MainWindow::~MainWindow() {
 	delete link;
 	delete ui;
+
 }
 
 void MainWindow::RaiseEvent(event_t event, int arg) {
@@ -314,19 +313,7 @@ populate_table();
 draw_graph1();
 }
 
-#ifdef ENABLE_TEST_DATA
-void MainWindow::Slot_scanDummyBtn_click()
-{
-scandata.freq_start = (ui->fcentre->value()-ui->fspan->value()/2.0)*1000000;
-scandata.freq_end = (ui->fcentre->value()+ui->fspan->value()/2.0)*1000000;
-scandata.SetPointCount(ui->point_count->value());
 
-scandata.dummy_data(this);
-
-populate_table();
-draw_graph1();
-}
-#endif
 
 void MainWindow::Slot_cursor_move(double pos) {
 //printf("pos=%lf\n",pos);
@@ -594,6 +581,34 @@ if (Config::dir_data != fi.dir().path()) {
 }
 }
 
+void MainWindow::Auto_connect_device() {
+	//unsigned int i;
+	//QDir dir("/dev","ttyUSB*");
+	QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
+			QDir::System);
+
+	printf("auto: %d\n", dir.count());
+
+	//printf("auto: %1\n", dir[0]);
+
+
+	//ui->menuDevice->clear();
+	//for (i = 0; i < dir.count(); i++)
+	//	ui->menuDevice->addAction(dir[i]);
+
+
+	if (link)
+		delete link;
+
+	link = new SerialLink(dir[0].toLatin1().data(), 57600);
+
+	if (link->IsUp())
+		link->Cmd_Off();
+
+
+}
+
+
 void MainWindow::Slot_menuDevice_Show() {
 unsigned int i;
 //QDir dir("/dev","ttyUSB*");
@@ -601,6 +616,7 @@ QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
 		QDir::System);
 
 printf("dir: %d\n", dir.count());
+
 ui->menuDevice->clear();
 for (i = 0; i < dir.count(); i++)
 	ui->menuDevice->addAction(dir[i]);

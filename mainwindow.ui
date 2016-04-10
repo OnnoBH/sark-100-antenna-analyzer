@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1179</width>
-    <height>683</height>
+    <height>711</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -35,6 +35,12 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
       </property>
       <property name="currentIndex">
        <number>1</number>
@@ -393,6 +399,9 @@
             </size>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
             <item>
              <layout class="QGridLayout" name="gridLayout">
               <item row="6" column="1">
@@ -796,9 +805,24 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="scanDummyBtn">
-                <property name="text">
-                 <string>Test Data</string>
+               <widget class="QProgressBar" name="progressBar">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="value">
+                 <number>0</number>
                 </property>
                </widget>
               </item>
@@ -807,16 +831,19 @@
             <item>
              <widget class="QPushButton" name="syncCentre">
               <property name="text">
-               <string>Sync with swr center</string>
+               <string>Sync centre with lowest swr point</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="manual">
               <property name="text">
-               <string>Manual measurement</string>
+               <string>+/- 5Khz sweep around centre freq</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_7" native="true"/>
             </item>
             <item>
              <widget class="QGroupBox" name="groupBox">
@@ -1370,13 +1397,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="progressBar">
-      <property name="value">
-       <number>24</number>
-      </property>
      </widget>
     </item>
    </layout>

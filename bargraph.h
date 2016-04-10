@@ -31,7 +31,7 @@ class BarGraph : public QWidget
     Q_OBJECT
 public:
     explicit BarGraph(QWidget *parent = 0);
-    ~BarGraph();
+	~BarGraph();
 
     void Draw(QPainter &painter);
     void SetIncAuto();
