@@ -26,14 +26,13 @@ public:
     enum event_t {progress_event};
     //union eventarg_t {double d; int i;};
 
-
-
     //EventReceiver();
     virtual void RaiseEvent(event_t event,int arg) = 0;
 
     enum event_t2 {progress_event_freq};
 
     virtual void RaiseEvent2(event_t2 event,float freq, float swr) = 0;
+
 
 
 private:

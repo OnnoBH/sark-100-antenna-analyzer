@@ -36,6 +36,8 @@ const Version MainWindow::version = Version(0, 10, 14, "mod@pa1ap");
 
 ScanData scandata;
 
+bool flip;
+
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent), ui(new Ui::MainWindow) {
 	setlinebuf(stdout);
@@ -103,10 +105,23 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->khz10, SIGNAL(toggled(bool)), this, SLOT(Slot_khz10_change()));
 	connect(ui->khz, SIGNAL(toggled(bool)), this, SLOT(Slot_khz_change()));
 
+	connect(ui->mon_mhz, SIGNAL(toggled(bool)), this,
+			SLOT(Slot_mon_mhz_change()));
+	connect(ui->mon_100khz, SIGNAL(toggled(bool)), this,
+			SLOT(Slot_mon_100khz_change()));
+	connect(ui->mon_10khz, SIGNAL(toggled(bool)), this,
+			SLOT(Slot_mon_10khz_change()));
+	connect(ui->mon_1khz, SIGNAL(toggled(bool)), this,
+			SLOT(Slot_mon_1khz_change()));
+	connect(ui->mon_100hz, SIGNAL(toggled(bool)), this,
+			SLOT(Slot_mon_100hz_change()));
+	connect(ui->mon_10hz, SIGNAL(toggled(bool)), this,
+			SLOT(Slot_mon_10hz_change()));
+
 	connect(ui->monStartBtn, SIGNAL(clicked()), this,
 			SLOT(Slot_monStart_click()));
-	connect(ui->monStopBtn, SIGNAL(clicked()), this,
-			SLOT(Slot_monStop_click()));
+//	connect(ui->monStopBtn, SIGNAL(clicked()), this,
+//			SLOT(Slot_monStop_click()));
 
 	QCheckBox *ctrls[] = { ui->plotz_chk, ui->plotx_chk, ui->plotr_chk, NULL };
 	for (int i = 0; ctrls[i]; i++)
@@ -250,6 +265,30 @@ void MainWindow::draw_graph1(int fraction) {
 
 }
 
+void MainWindow::Slot_mon_mhz_change() {
+	ui->monfreq->setSingleStep(1);
+}
+
+void MainWindow::Slot_mon_100khz_change() {
+	ui->monfreq->setSingleStep(0.1);
+}
+
+void MainWindow::Slot_mon_10khz_change() {
+	ui->monfreq->setSingleStep(0.01);
+}
+
+void MainWindow::Slot_mon_1khz_change() {
+	ui->monfreq->setSingleStep(0.001);
+}
+
+void MainWindow::Slot_mon_100hz_change() {
+	ui->monfreq->setSingleStep(0.0001);
+}
+
+void MainWindow::Slot_mon_10hz_change() {
+	ui->monfreq->setSingleStep(0.00001);
+}
+
 void MainWindow::Slot_mhz_change() {
 	ui->fcentre->setSingleStep(1);
 }
@@ -294,6 +333,8 @@ void MainWindow::Slot_button100khz_click() {
 
 void MainWindow::Slot_khzScan(float factor, int stepSize) {
 
+	ui->scanBtn->setText(QString("%1").arg("Transmitting"));
+
 	scandata.freq_start = (ui->fcentre->value() - factor) * 1000000;
 	scandata.freq_end = (ui->fcentre->value() + factor) * 1000000;
 
@@ -313,23 +354,25 @@ void MainWindow::Slot_khzScan(float factor, int stepSize) {
 	draw_graph1(setFraction(count));
 
 	ui->canvas1->update();
+	ui->scanBtn->setText(QString("%1").arg("Start"));
+
 }
 
 int MainWindow::setFraction(int points) {
 
-	int fraction = 1;
+	int fraction = 2;
 	if (points <= 200) {
 		fraction = 3;
 		return fraction;
-	}
-	if (points <= 300) {
-		fraction = 2;
 	}
 
 	return fraction;
 }
 
 void MainWindow::Slot_scanBtn_click() {
+
+	ui->scanBtn->setText(QString("%1").arg("Transmitting"));
+
 	scandata.freq_start = (ui->fcentre->value() - ui->fspan->value() / 2.0)
 			* 1000000;
 	scandata.freq_end = (ui->fcentre->value() + ui->fspan->value() / 2.0)
@@ -348,6 +391,8 @@ void MainWindow::Slot_scanBtn_click() {
 
 	populate_table();
 	draw_graph1(setFraction(scandata.GetPointCount()));
+
+	ui->scanBtn->setText(QString("%1").arg("Start"));
 
 }
 
@@ -697,40 +742,52 @@ void MainWindow::Slot_copy() {
 }
 
 void MainWindow::Slot_monStart_click() {
-	ui->SWR_Bar->vmin = ui->SWR_Bar->vorig = 1;
-	ui->SWR_Bar->vmax = 10;
-	ui->SWR_Bar->SetIncAuto();
-	ui->SWR_Bar->value = 1;
 
-	ui->Z_Bar->brush = QBrush(qRgb(255, 85, 0));
-	ui->Z_Bar->vmin = 0;
-	ui->Z_Bar->vmax = 200;
-	ui->Z_Bar->value = 50;
-	ui->Z_Bar->SetIncAuto();
+	if (flip) {
+		flip = false;
+		MainWindow::Slot_monStop_click();
+	} else {
+		flip = true;
+		ui->monStartBtn->setText(QString("%1").arg("Transmitting"));
 
-	ui->R_Bar->brush = QBrush(Qt::darkGreen);
-	ui->R_Bar->vmin = 0;
-	ui->R_Bar->vmax = 200;
-	ui->R_Bar->value = 50;
-	ui->R_Bar->SetIncAuto();
+		ui->SWR_Bar->vmin = ui->SWR_Bar->vorig = 1;
+		ui->SWR_Bar->vmax = 10;
+		ui->SWR_Bar->SetIncAuto();
+		ui->SWR_Bar->value = 1;
 
-	ui->X_Bar->brush = QBrush(Qt::red);
-	ui->X_Bar->vmin = -100;
-	ui->X_Bar->vmax = 200;
-	ui->X_Bar->value = 0;
-	ui->X_Bar->SetIncAuto();
+		ui->Z_Bar->brush = QBrush(qRgb(255, 85, 0));
+		ui->Z_Bar->vmin = 0;
+		ui->Z_Bar->vmax = 200;
+		ui->Z_Bar->value = 50;
+		ui->Z_Bar->SetIncAuto();
 
-	if (link->IsUp()) {
-		link->Cmd_Freq((long) (ui->monfreq->value() * 1000000));
-		link->Cmd_On();
+		ui->R_Bar->brush = QBrush(Qt::darkGreen);
+		ui->R_Bar->vmin = 0;
+		ui->R_Bar->vmax = 200;
+		ui->R_Bar->value = 50;
+		ui->R_Bar->SetIncAuto();
+
+		ui->X_Bar->brush = QBrush(Qt::red);
+		ui->X_Bar->vmin = -100;
+		ui->X_Bar->vmax = 200;
+		ui->X_Bar->value = 0;
+		ui->X_Bar->SetIncAuto();
+
+		if (link->IsUp()) {
+			link->Cmd_Freq((long) (ui->monfreq->value() * 1000000));
+			link->Cmd_On();
+		}
+
+		Slot_montimer_timeout();
+		montimer.start((long) (ui->monrate->value()));
 	}
 
-	Slot_montimer_timeout();
-	montimer.start((long) (ui->monrate->value()));
 }
 
 void MainWindow::Slot_monStop_click() {
 	montimer.stop();
+
+	ui->monStartBtn->setText(QString("%1").arg("Start"));
 
 	if (link->IsUp())
 		link->Cmd_Off();
@@ -757,5 +814,8 @@ void MainWindow::Slot_montimer_timeout() {
 		ui->X_lbl->setText(QString("%1").arg(sample.X, 0, 'f', 1));
 		ui->X_Bar->value = sample.X;
 		ui->X_Bar->update();
+		link->Cmd_Freq((long) (ui->monfreq->value() * 1000000));
+		link->Cmd_On();
+
 	}
 }
