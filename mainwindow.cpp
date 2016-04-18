@@ -118,10 +118,16 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->mon_10hz, SIGNAL(toggled(bool)), this,
 			SLOT(Slot_mon_10hz_change()));
 
+
 	connect(ui->monStartBtn, SIGNAL(clicked()), this,
 			SLOT(Slot_monStart_click()));
 //	connect(ui->monStopBtn, SIGNAL(clicked()), this,
 //			SLOT(Slot_monStop_click()));
+
+	connect(ui->monitorSync, SIGNAL(clicked()), this,
+			SLOT(Slot_monitorSync_click()));
+
+
 
 	QCheckBox *ctrls[] = { ui->plotz_chk, ui->plotx_chk, ui->plotr_chk, NULL };
 	for (int i = 0; ctrls[i]; i++)
@@ -264,6 +270,13 @@ void MainWindow::draw_graph1(int fraction) {
 							/ 1000000, 0, 'f', 2));
 
 }
+
+
+void MainWindow::Slot_monitorSync_click() {
+	ui->monfreq->setValue(ui->fcentre->value());
+}
+
+
 
 void MainWindow::Slot_mon_mhz_change() {
 	ui->monfreq->setSingleStep(1);
