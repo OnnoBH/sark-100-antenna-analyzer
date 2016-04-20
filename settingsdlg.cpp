@@ -30,7 +30,10 @@ SettingsDlg::SettingsDlg(QWidget *parent) :
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(Slot_Accept()));
 
-    ui->swr_max->setValue(Config::swr_bw_max);
+
+
+
+    ui->swr_max->setValue(Config::swr_max);
     ui->swr_bw_max->setValue(Config::swr_bw_max);
     ui->Z_Target->setValue(Config::Z_Target);
 }

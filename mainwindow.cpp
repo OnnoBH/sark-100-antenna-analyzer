@@ -37,6 +37,9 @@ const Version MainWindow::version = Version(0, 10, 14, "mod@pa1ap");
 ScanData scandata;
 
 bool flip;
+double max_swr = 0.0;
+double min_swr = 10.0;
+double delta_swr = 0.0;
 
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -118,7 +121,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->mon_10hz, SIGNAL(toggled(bool)), this,
 			SLOT(Slot_mon_10hz_change()));
 
-
 	connect(ui->monStartBtn, SIGNAL(clicked()), this,
 			SLOT(Slot_monStart_click()));
 //	connect(ui->monStopBtn, SIGNAL(clicked()), this,
@@ -126,8 +128,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->monitorSync, SIGNAL(clicked()), this,
 			SLOT(Slot_monitorSync_click()));
-
-
 
 	QCheckBox *ctrls[] = { ui->plotz_chk, ui->plotx_chk, ui->plotr_chk, NULL };
 	for (int i = 0; ctrls[i]; i++)
@@ -260,23 +260,22 @@ void MainWindow::draw_graph1(int fraction) {
 
 	//Show stats at the bottom of the graph
 	ui->swr_min_disp->setText(
-			QString("%1 (f=%2MHz, Z=%3%4, bw=%5MHz)").arg(
+			QString("%1 (f=%2MHz, Z=%3%4, R=%5%6, X=%7 swr bw=%8MHz)").arg(
 					scandata.points[scandata.swr_min_idx].swr, 0, 'f', 2).arg(
 					scandata.points[scandata.swr_min_idx].freq / 1000000).arg(
 					scandata.points[scandata.swr_min_idx].Z, 0, 'f', 2).arg(
-					QChar(0x03A9)).arg(
+					QChar(0x03A9)).arg(scandata.points[scandata.swr_min_idx].R,
+					0, 'f', 2).arg(QChar(0x03A9)).arg(
+					scandata.points[scandata.X_min_idx].X, 0, 'f', 2).arg(
 					(scandata.points[scandata.swr_bw_hi_idx].freq
 							- scandata.points[scandata.swr_bw_lo_idx].freq)
 							/ 1000000, 0, 'f', 2));
 
 }
 
-
 void MainWindow::Slot_monitorSync_click() {
 	ui->monfreq->setValue(ui->fcentre->value());
 }
-
-
 
 void MainWindow::Slot_mon_mhz_change() {
 	ui->monfreq->setSingleStep(1);
@@ -418,10 +417,14 @@ void MainWindow::Slot_cursor_move(double pos) {
 
 	Sample *sample = &scandata.points[n];
 
+
 	ui->cursor_disp->setText(
-			QString("f=%1MHz, swr=%2, Z=%3%4").arg(sample->freq / 1000000).arg(
-					sample->swr, 0, 'f', 2).arg(sample->Z, 0, 'f', 2).arg(
-					QChar(0x03A9)));
+			QString("%1 (f=%2MHz, Z=%3%4, R=%5%6, X=%7)").arg(
+					sample->swr, 0, 'f', 2).arg(sample->freq / 1000000).arg(
+					sample->Z, 0, 'f', 2).arg(QChar(0x03A9)).arg(
+							sample->R, 0, 'f', 2).arg(
+					QChar(0x03A9)).arg(sample->X, 0, 'f', 2));
+
 }
 
 void MainWindow::set_band(double f, double span) {
@@ -756,6 +759,10 @@ void MainWindow::Slot_copy() {
 
 void MainWindow::Slot_monStart_click() {
 
+	max_swr = 0.0;
+	min_swr = 10.0;
+	delta_swr = 0.0;
+
 	if (flip) {
 		flip = false;
 		MainWindow::Slot_monStop_click();
@@ -827,6 +834,42 @@ void MainWindow::Slot_montimer_timeout() {
 		ui->X_lbl->setText(QString("%1").arg(sample.X, 0, 'f', 1));
 		ui->X_Bar->value = sample.X;
 		ui->X_Bar->update();
+
+		ui->X_Bar->SetIncAuto();
+
+		double max = Config::swr_bw_max;
+
+		if (min_swr > sample.swr) {
+			min_swr = sample.swr;
+		}
+
+		if (max_swr < sample.swr) {
+			max_swr = sample.swr;
+		}
+
+		delta_swr = ((max_swr - min_swr) / max_swr) * 100;
+
+		ui->delta->setText(QString("%1%").arg(delta_swr, 0, 'f', 1));
+
+		ui->SWR_delta->vmin = 0;
+		ui->SWR_delta->SetIncAuto();
+		ui->SWR_delta->value = delta_swr;
+		ui->SWR_delta->update();
+
+		//ui->SWR_detail->brush = QBrush(Qt::yellow);
+		ui->peak->setText(QString("%1:1").arg(max_swr, 0, 'f', 3));
+		ui->SWR_max->vmin = ui->SWR_max->vorig = 1;
+		ui->SWR_max->vmax = max;
+		ui->SWR_max->value = max_swr;
+		ui->SWR_max->update();
+
+		ui->dip->setText(QString("%1:1").arg(min_swr, 0, 'f', 3));
+
+		ui->SWR_min->vmin = ui->SWR_min->vorig = 1;
+		ui->SWR_min->vmax = max;
+		ui->SWR_min->value = min_swr;
+		ui->SWR_min->update();
+
 		link->Cmd_Freq((long) (ui->monfreq->value() * 1000000));
 		link->Cmd_On();
 
