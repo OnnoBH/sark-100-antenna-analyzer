@@ -17,6 +17,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -116,28 +117,28 @@ public:
     QWidget *widget;
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout;
-    QLabel *fend_disp;
+    QLabel *fstep_disp;
+    QLabel *label_11;
+    QLabel *label_10;
+    QLabel *fstart_disp;
+    QLabel *label;
+    QCheckBox *useraw_chk;
+    QLabel *label_22;
     QDoubleSpinBox *fcentre;
     QLabel *abc;
     QLabel *label_4;
     QLabel *label_7;
-    QLabel *label_2;
-    QLabel *fstep_disp;
     QLabel *label_8;
-    QLabel *label;
     QLabel *label_6;
-    QLabel *label_3;
     QLabel *label_5;
     QLabel *label_9;
-    QLabel *label_22;
-    QLabel *label_10;
-    QCheckBox *useraw_chk;
     QSpinBox *onno;
-    QLabel *label_11;
-    QLabel *fstart_disp;
     QComboBox *band_cb;
-    QDoubleSpinBox *fspan;
     QLabel *label_13;
+    QLabel *label_3;
+    QLabel *fend_disp;
+    QDoubleSpinBox *fspan;
+    QLabel *label_2;
     QHBoxLayout *horizontalLayout_6;
     QRadioButton *mhz;
     QRadioButton *khz100;
@@ -146,23 +147,39 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QPushButton *scanBtn;
     QProgressBar *progressBar;
+    QFrame *line_4;
+    QGridLayout *gridLayout_8;
     QPushButton *syncCentre;
     QPushButton *syncCursor;
+    QLabel *label_36;
+    QFrame *line_2;
+    QGridLayout *gridLayout_7;
     QPushButton *pushButton5khz;
     QPushButton *pushButton20khz;
-    QPushButton *pushButton50khz;
     QPushButton *pushButton100khz;
-    QWidget *widget_7;
-    QGroupBox *groupBox;
-    QGridLayout *gridLayout_2;
-    QCheckBox *plotx_chk;
-    QCheckBox *plotz_chk;
-    QWidget *widget_5;
-    QWidget *widget_4;
+    QPushButton *pushButton50khz;
+    QLabel *label_35;
+    QFrame *line;
+    QGridLayout *gridLayout_10;
     QWidget *widget_6;
     QWidget *widget_3;
+    QWidget *widget_5;
+    QWidget *widget_4;
     QCheckBox *checkBox;
+    QCheckBox *plotz_chk;
     QCheckBox *plotr_chk;
+    QCheckBox *plotx_chk;
+    QFrame *line_3;
+    QGridLayout *gridLayout_6;
+    QLabel *label_31;
+    QLabel *lowZloss;
+    QLabel *lowZ;
+    QLabel *label_28;
+    QLabel *lowZfreq;
+    QLabel *label_33;
+    QLabel *label_32;
+    QLabel *lowZlength;
+    QLabel *label_34;
     QSpacerItem *verticalSpacer;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
@@ -196,8 +213,8 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1179, 896);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        MainWindow->resize(1179, 1028);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
@@ -226,26 +243,34 @@ public:
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(-1, 0, -1, 0);
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setEnabled(true);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy1);
         tabWidget->setMinimumSize(QSize(0, 0));
+        tabWidget->setIconSize(QSize(16, 16));
         tab_4 = new QWidget();
         tab_4->setObjectName(QStringLiteral("tab_4"));
         verticalLayout_8 = new QVBoxLayout(tab_4);
         verticalLayout_8->setSpacing(6);
         verticalLayout_8->setContentsMargins(11, 11, 11, 11);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
+        verticalLayout_8->setContentsMargins(-1, 0, -1, 0);
         splitter_2 = new QSplitter(tab_4);
         splitter_2->setObjectName(QStringLiteral("splitter_2"));
         splitter_2->setOrientation(Qt::Horizontal);
         widget_8 = new QWidget(splitter_2);
         widget_8->setObjectName(QStringLiteral("widget_8"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(widget_8->sizePolicy().hasHeightForWidth());
-        widget_8->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(widget_8->sizePolicy().hasHeightForWidth());
+        widget_8->setSizePolicy(sizePolicy2);
         widget_8->setMinimumSize(QSize(300, 0));
         widget_8->setMaximumSize(QSize(260, 16777215));
         verticalLayout_6 = new QVBoxLayout(widget_8);
@@ -265,18 +290,18 @@ public:
 
         label_23 = new QLabel(widget_8);
         label_23->setObjectName(QStringLiteral("label_23"));
-        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(label_23->sizePolicy().hasHeightForWidth());
-        label_23->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(label_23->sizePolicy().hasHeightForWidth());
+        label_23->setSizePolicy(sizePolicy3);
 
         gridLayout_3->addWidget(label_23, 1, 0, 1, 1);
 
         label_26 = new QLabel(widget_8);
         label_26->setObjectName(QStringLiteral("label_26"));
-        sizePolicy2.setHeightForWidth(label_26->sizePolicy().hasHeightForWidth());
-        label_26->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_26->sizePolicy().hasHeightForWidth());
+        label_26->setSizePolicy(sizePolicy3);
 
         gridLayout_3->addWidget(label_26, 4, 0, 1, 1);
 
@@ -328,11 +353,11 @@ public:
 
         mon_10hz = new QRadioButton(widget_8);
         mon_10hz->setObjectName(QStringLiteral("mon_10hz"));
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(mon_10hz->sizePolicy().hasHeightForWidth());
-        mon_10hz->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(mon_10hz->sizePolicy().hasHeightForWidth());
+        mon_10hz->setSizePolicy(sizePolicy4);
         mon_10hz->setMinimumSize(QSize(0, 0));
 
         gridLayout_4->addWidget(mon_10hz, 1, 2, 1, 1);
@@ -375,8 +400,8 @@ public:
 
         groupBox_2 = new QGroupBox(widget_8);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        sizePolicy1.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
-        groupBox_2->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
+        groupBox_2->setSizePolicy(sizePolicy2);
         groupBox_2->setMinimumSize(QSize(0, 60));
 
         verticalLayout_6->addWidget(groupBox_2);
@@ -395,8 +420,8 @@ public:
         gridLayout_5->setContentsMargins(0, 0, 0, 0);
         SWR_max = new BarGraph(verticalLayoutWidget_2);
         SWR_max->setObjectName(QStringLiteral("SWR_max"));
-        sizePolicy3.setHeightForWidth(SWR_max->sizePolicy().hasHeightForWidth());
-        SWR_max->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(SWR_max->sizePolicy().hasHeightForWidth());
+        SWR_max->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(SWR_max, 2, 4, 1, 1);
 
@@ -436,15 +461,15 @@ public:
 
         SWR_Bar = new BarGraph(verticalLayoutWidget_2);
         SWR_Bar->setObjectName(QStringLiteral("SWR_Bar"));
-        sizePolicy3.setHeightForWidth(SWR_Bar->sizePolicy().hasHeightForWidth());
-        SWR_Bar->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(SWR_Bar->sizePolicy().hasHeightForWidth());
+        SWR_Bar->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(SWR_Bar, 0, 4, 1, 1);
 
         Z_Bar = new BarGraph(verticalLayoutWidget_2);
         Z_Bar->setObjectName(QStringLiteral("Z_Bar"));
-        sizePolicy3.setHeightForWidth(Z_Bar->sizePolicy().hasHeightForWidth());
-        Z_Bar->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(Z_Bar->sizePolicy().hasHeightForWidth());
+        Z_Bar->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(Z_Bar, 4, 4, 1, 1);
 
@@ -465,8 +490,8 @@ public:
 
         label_15 = new QLabel(verticalLayoutWidget_2);
         label_15->setObjectName(QStringLiteral("label_15"));
-        sizePolicy2.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
-        label_15->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy3);
 
         gridLayout_5->addWidget(label_15, 0, 0, 1, 1);
 
@@ -479,15 +504,15 @@ public:
 
         R_Bar = new BarGraph(verticalLayoutWidget_2);
         R_Bar->setObjectName(QStringLiteral("R_Bar"));
-        sizePolicy3.setHeightForWidth(R_Bar->sizePolicy().hasHeightForWidth());
-        R_Bar->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(R_Bar->sizePolicy().hasHeightForWidth());
+        R_Bar->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(R_Bar, 5, 4, 1, 1);
 
         X_Bar = new BarGraph(verticalLayoutWidget_2);
         X_Bar->setObjectName(QStringLiteral("X_Bar"));
-        sizePolicy3.setHeightForWidth(X_Bar->sizePolicy().hasHeightForWidth());
-        X_Bar->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(X_Bar->sizePolicy().hasHeightForWidth());
+        X_Bar->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(X_Bar, 6, 4, 1, 1);
 
@@ -499,18 +524,18 @@ public:
 
         SWR_min = new BarGraph(verticalLayoutWidget_2);
         SWR_min->setObjectName(QStringLiteral("SWR_min"));
-        sizePolicy3.setHeightForWidth(SWR_min->sizePolicy().hasHeightForWidth());
-        SWR_min->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(SWR_min->sizePolicy().hasHeightForWidth());
+        SWR_min->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(SWR_min, 1, 4, 1, 1);
 
         label_29 = new QLabel(verticalLayoutWidget_2);
         label_29->setObjectName(QStringLiteral("label_29"));
-        QSizePolicy sizePolicy4(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
-        label_29->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
+        label_29->setSizePolicy(sizePolicy5);
         label_29->setMaximumSize(QSize(40, 16777215));
         label_29->setAlignment(Qt::AlignCenter);
 
@@ -518,8 +543,8 @@ public:
 
         label_30 = new QLabel(verticalLayoutWidget_2);
         label_30->setObjectName(QStringLiteral("label_30"));
-        sizePolicy4.setHeightForWidth(label_30->sizePolicy().hasHeightForWidth());
-        label_30->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(label_30->sizePolicy().hasHeightForWidth());
+        label_30->setSizePolicy(sizePolicy5);
         label_30->setMaximumSize(QSize(40, 16777215));
         label_30->setAlignment(Qt::AlignCenter);
 
@@ -535,8 +560,8 @@ public:
 
         dip = new QLabel(verticalLayoutWidget_2);
         dip->setObjectName(QStringLiteral("dip"));
-        sizePolicy1.setHeightForWidth(dip->sizePolicy().hasHeightForWidth());
-        dip->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(dip->sizePolicy().hasHeightForWidth());
+        dip->setSizePolicy(sizePolicy2);
         dip->setMinimumSize(QSize(0, 0));
         dip->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
@@ -562,8 +587,8 @@ public:
 
         SWR_delta = new BarGraph(verticalLayoutWidget_2);
         SWR_delta->setObjectName(QStringLiteral("SWR_delta"));
-        sizePolicy3.setHeightForWidth(SWR_delta->sizePolicy().hasHeightForWidth());
-        SWR_delta->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(SWR_delta->sizePolicy().hasHeightForWidth());
+        SWR_delta->setSizePolicy(sizePolicy4);
 
         gridLayout_5->addWidget(SWR_delta, 3, 4, 1, 1);
 
@@ -578,13 +603,14 @@ public:
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setContentsMargins(-1, 0, -1, 0);
         splitter = new QSplitter(tab);
         splitter->setObjectName(QStringLiteral("splitter"));
         splitter->setOrientation(Qt::Horizontal);
         widget = new QWidget(splitter);
         widget->setObjectName(QStringLiteral("widget"));
-        sizePolicy1.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
-        widget->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy2);
         widget->setMaximumSize(QSize(260, 16777215));
         verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setSpacing(6);
@@ -594,13 +620,58 @@ public:
         gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        fend_disp = new QLabel(widget);
-        fend_disp->setObjectName(QStringLiteral("fend_disp"));
+        gridLayout->setVerticalSpacing(0);
+        fstep_disp = new QLabel(widget);
+        fstep_disp->setObjectName(QStringLiteral("fstep_disp"));
 
-        gridLayout->addWidget(fend_disp, 6, 1, 1, 1);
+        gridLayout->addWidget(fstep_disp, 8, 1, 1, 1);
+
+        label_11 = new QLabel(widget);
+        label_11->setObjectName(QStringLiteral("label_11"));
+        sizePolicy3.setHeightForWidth(label_11->sizePolicy().hasHeightForWidth());
+        label_11->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(label_11, 3, 0, 1, 1);
+
+        label_10 = new QLabel(widget);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        sizePolicy3.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
+        label_10->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(label_10, 3, 2, 1, 1);
+
+        fstart_disp = new QLabel(widget);
+        fstart_disp->setObjectName(QStringLiteral("fstart_disp"));
+
+        gridLayout->addWidget(fstart_disp, 5, 1, 1, 1);
+
+        label = new QLabel(widget);
+        label->setObjectName(QStringLiteral("label"));
+        sizePolicy3.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(label, 2, 0, 1, 1);
+
+        useraw_chk = new QCheckBox(widget);
+        useraw_chk->setObjectName(QStringLiteral("useraw_chk"));
+        useraw_chk->setChecked(true);
+
+        gridLayout->addWidget(useraw_chk, 10, 0, 1, 3);
+
+        label_22 = new QLabel(widget);
+        label_22->setObjectName(QStringLiteral("label_22"));
+
+        gridLayout->addWidget(label_22, 9, 0, 1, 1);
 
         fcentre = new QDoubleSpinBox(widget);
         fcentre->setObjectName(QStringLiteral("fcentre"));
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(fcentre->sizePolicy().hasHeightForWidth());
+        fcentre->setSizePolicy(sizePolicy6);
+        fcentre->setButtonSymbols(QAbstractSpinBox::PlusMinus);
+        fcentre->setAccelerated(true);
         fcentre->setDecimals(6);
         fcentre->setMaximum(60);
         fcentre->setSingleStep(1);
@@ -611,96 +682,56 @@ public:
         abc = new QLabel(widget);
         abc->setObjectName(QStringLiteral("abc"));
 
-        gridLayout->addWidget(abc, 8, 1, 1, 1);
+        gridLayout->addWidget(abc, 9, 1, 1, 1);
 
         label_4 = new QLabel(widget);
         label_4->setObjectName(QStringLiteral("label_4"));
-        sizePolicy2.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
-        label_4->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy3);
 
         gridLayout->addWidget(label_4, 4, 0, 1, 1);
 
         label_7 = new QLabel(widget);
         label_7->setObjectName(QStringLiteral("label_7"));
-        sizePolicy2.setHeightForWidth(label_7->sizePolicy().hasHeightForWidth());
-        label_7->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_7->sizePolicy().hasHeightForWidth());
+        label_7->setSizePolicy(sizePolicy3);
 
         gridLayout->addWidget(label_7, 5, 2, 1, 1);
 
-        label_2 = new QLabel(widget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        sizePolicy2.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
-        label_2->setSizePolicy(sizePolicy2);
-
-        gridLayout->addWidget(label_2, 5, 0, 1, 1);
-
-        fstep_disp = new QLabel(widget);
-        fstep_disp->setObjectName(QStringLiteral("fstep_disp"));
-
-        gridLayout->addWidget(fstep_disp, 7, 1, 1, 1);
-
         label_8 = new QLabel(widget);
         label_8->setObjectName(QStringLiteral("label_8"));
-        sizePolicy2.setHeightForWidth(label_8->sizePolicy().hasHeightForWidth());
-        label_8->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_8->sizePolicy().hasHeightForWidth());
+        label_8->setSizePolicy(sizePolicy3);
 
         gridLayout->addWidget(label_8, 6, 2, 1, 1);
 
-        label = new QLabel(widget);
-        label->setObjectName(QStringLiteral("label"));
-        sizePolicy2.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy2);
-
-        gridLayout->addWidget(label, 2, 0, 1, 1);
-
         label_6 = new QLabel(widget);
         label_6->setObjectName(QStringLiteral("label_6"));
-        sizePolicy2.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy3);
 
         gridLayout->addWidget(label_6, 2, 2, 1, 1);
 
-        label_3 = new QLabel(widget);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        sizePolicy2.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
-        label_3->setSizePolicy(sizePolicy2);
-
-        gridLayout->addWidget(label_3, 6, 0, 1, 1);
-
         label_5 = new QLabel(widget);
         label_5->setObjectName(QStringLiteral("label_5"));
-        sizePolicy2.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
-        label_5->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy3);
 
-        gridLayout->addWidget(label_5, 7, 0, 1, 1);
+        gridLayout->addWidget(label_5, 8, 0, 1, 1);
 
         label_9 = new QLabel(widget);
         label_9->setObjectName(QStringLiteral("label_9"));
-        sizePolicy2.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
-        label_9->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
+        label_9->setSizePolicy(sizePolicy3);
 
         gridLayout->addWidget(label_9, 4, 2, 1, 1);
 
-        label_22 = new QLabel(widget);
-        label_22->setObjectName(QStringLiteral("label_22"));
-
-        gridLayout->addWidget(label_22, 8, 0, 1, 1);
-
-        label_10 = new QLabel(widget);
-        label_10->setObjectName(QStringLiteral("label_10"));
-        sizePolicy2.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
-        label_10->setSizePolicy(sizePolicy2);
-
-        gridLayout->addWidget(label_10, 3, 2, 1, 1);
-
-        useraw_chk = new QCheckBox(widget);
-        useraw_chk->setObjectName(QStringLiteral("useraw_chk"));
-        useraw_chk->setChecked(true);
-
-        gridLayout->addWidget(useraw_chk, 9, 0, 1, 3);
-
         onno = new QSpinBox(widget);
         onno->setObjectName(QStringLiteral("onno"));
+        sizePolicy6.setHeightForWidth(onno->sizePolicy().hasHeightForWidth());
+        onno->setSizePolicy(sizePolicy6);
+        onno->setButtonSymbols(QAbstractSpinBox::PlusMinus);
+        onno->setAccelerated(true);
         onno->setMinimum(1);
         onno->setMaximum(1000);
         onno->setSingleStep(1);
@@ -708,25 +739,39 @@ public:
 
         gridLayout->addWidget(onno, 4, 1, 1, 1);
 
-        label_11 = new QLabel(widget);
-        label_11->setObjectName(QStringLiteral("label_11"));
-        sizePolicy2.setHeightForWidth(label_11->sizePolicy().hasHeightForWidth());
-        label_11->setSizePolicy(sizePolicy2);
-
-        gridLayout->addWidget(label_11, 3, 0, 1, 1);
-
-        fstart_disp = new QLabel(widget);
-        fstart_disp->setObjectName(QStringLiteral("fstart_disp"));
-
-        gridLayout->addWidget(fstart_disp, 5, 1, 1, 1);
-
         band_cb = new QComboBox(widget);
         band_cb->setObjectName(QStringLiteral("band_cb"));
+        QSizePolicy sizePolicy7(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(band_cb->sizePolicy().hasHeightForWidth());
+        band_cb->setSizePolicy(sizePolicy7);
 
         gridLayout->addWidget(band_cb, 0, 1, 1, 2);
 
+        label_13 = new QLabel(widget);
+        label_13->setObjectName(QStringLiteral("label_13"));
+
+        gridLayout->addWidget(label_13, 0, 0, 1, 1);
+
+        label_3 = new QLabel(widget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        sizePolicy3.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
+        label_3->setSizePolicy(sizePolicy3);
+
+        gridLayout->addWidget(label_3, 6, 0, 1, 1);
+
+        fend_disp = new QLabel(widget);
+        fend_disp->setObjectName(QStringLiteral("fend_disp"));
+
+        gridLayout->addWidget(fend_disp, 6, 1, 1, 1);
+
         fspan = new QDoubleSpinBox(widget);
         fspan->setObjectName(QStringLiteral("fspan"));
+        sizePolicy6.setHeightForWidth(fspan->sizePolicy().hasHeightForWidth());
+        fspan->setSizePolicy(sizePolicy6);
+        fspan->setButtonSymbols(QAbstractSpinBox::PlusMinus);
+        fspan->setAccelerated(true);
         fspan->setDecimals(6);
         fspan->setMinimum(0.05);
         fspan->setMaximum(58);
@@ -735,15 +780,17 @@ public:
 
         gridLayout->addWidget(fspan, 3, 1, 1, 1);
 
-        label_13 = new QLabel(widget);
-        label_13->setObjectName(QStringLiteral("label_13"));
+        label_2 = new QLabel(widget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        sizePolicy3.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy3);
 
-        gridLayout->addWidget(label_13, 0, 0, 1, 1);
+        gridLayout->addWidget(label_2, 5, 0, 1, 1);
 
         horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setSpacing(2);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(-1, 10, -1, 10);
+        horizontalLayout_6->setContentsMargins(-1, 2, -1, 0);
         mhz = new QRadioButton(widget);
         buttonGroup = new QButtonGroup(MainWindow);
         buttonGroup->setObjectName(QStringLiteral("buttonGroup"));
@@ -780,16 +827,22 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
         scanBtn = new QPushButton(widget);
         scanBtn->setObjectName(QStringLiteral("scanBtn"));
+        sizePolicy6.setHeightForWidth(scanBtn->sizePolicy().hasHeightForWidth());
+        scanBtn->setSizePolicy(sizePolicy6);
 
         horizontalLayout_3->addWidget(scanBtn);
 
         progressBar = new QProgressBar(widget);
         progressBar->setObjectName(QStringLiteral("progressBar"));
         progressBar->setEnabled(false);
-        sizePolicy.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
-        progressBar->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy8(QSizePolicy::Fixed, QSizePolicy::Minimum);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy8);
         progressBar->setMaximumSize(QSize(100, 24));
         progressBar->setValue(0);
 
@@ -798,142 +851,261 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_3);
 
+        line_4 = new QFrame(widget);
+        line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setFrameShape(QFrame::HLine);
+        line_4->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_4);
+
+        gridLayout_8 = new QGridLayout();
+        gridLayout_8->setSpacing(6);
+        gridLayout_8->setObjectName(QStringLiteral("gridLayout_8"));
+        gridLayout_8->setVerticalSpacing(0);
+        gridLayout_8->setContentsMargins(-1, 0, -1, -1);
         syncCentre = new QPushButton(widget);
         syncCentre->setObjectName(QStringLiteral("syncCentre"));
 
-        verticalLayout->addWidget(syncCentre);
+        gridLayout_8->addWidget(syncCentre, 1, 0, 1, 1);
 
         syncCursor = new QPushButton(widget);
         syncCursor->setObjectName(QStringLiteral("syncCursor"));
 
-        verticalLayout->addWidget(syncCursor);
+        gridLayout_8->addWidget(syncCursor, 1, 1, 1, 1);
 
+        label_36 = new QLabel(widget);
+        label_36->setObjectName(QStringLiteral("label_36"));
+        label_36->setAlignment(Qt::AlignCenter);
+
+        gridLayout_8->addWidget(label_36, 0, 0, 1, 2);
+
+
+        verticalLayout->addLayout(gridLayout_8);
+
+        line_2 = new QFrame(widget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_2);
+
+        gridLayout_7 = new QGridLayout();
+        gridLayout_7->setSpacing(6);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        gridLayout_7->setVerticalSpacing(0);
+        gridLayout_7->setContentsMargins(-1, 6, -1, -1);
         pushButton5khz = new QPushButton(widget);
         pushButton5khz->setObjectName(QStringLiteral("pushButton5khz"));
 
-        verticalLayout->addWidget(pushButton5khz);
+        gridLayout_7->addWidget(pushButton5khz, 2, 0, 1, 1);
 
         pushButton20khz = new QPushButton(widget);
         pushButton20khz->setObjectName(QStringLiteral("pushButton20khz"));
 
-        verticalLayout->addWidget(pushButton20khz);
-
-        pushButton50khz = new QPushButton(widget);
-        pushButton50khz->setObjectName(QStringLiteral("pushButton50khz"));
-
-        verticalLayout->addWidget(pushButton50khz);
+        gridLayout_7->addWidget(pushButton20khz, 2, 1, 1, 1);
 
         pushButton100khz = new QPushButton(widget);
         pushButton100khz->setObjectName(QStringLiteral("pushButton100khz"));
 
-        verticalLayout->addWidget(pushButton100khz);
+        gridLayout_7->addWidget(pushButton100khz, 2, 3, 1, 1);
 
-        widget_7 = new QWidget(widget);
-        widget_7->setObjectName(QStringLiteral("widget_7"));
+        pushButton50khz = new QPushButton(widget);
+        pushButton50khz->setObjectName(QStringLiteral("pushButton50khz"));
 
-        verticalLayout->addWidget(widget_7);
+        gridLayout_7->addWidget(pushButton50khz, 2, 2, 1, 1);
 
-        groupBox = new QGroupBox(widget);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
-        gridLayout_2 = new QGridLayout(groupBox);
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setContentsMargins(11, 11, 11, 11);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        gridLayout_2->setVerticalSpacing(0);
-        gridLayout_2->setContentsMargins(6, 6, 6, 6);
-        plotx_chk = new QCheckBox(groupBox);
-        plotx_chk->setObjectName(QStringLiteral("plotx_chk"));
-        plotx_chk->setChecked(true);
+        label_35 = new QLabel(widget);
+        label_35->setObjectName(QStringLiteral("label_35"));
+        label_35->setAlignment(Qt::AlignCenter);
 
-        gridLayout_2->addWidget(plotx_chk, 4, 0, 1, 1);
+        gridLayout_7->addWidget(label_35, 0, 0, 1, 4);
 
-        plotz_chk = new QCheckBox(groupBox);
+
+        verticalLayout->addLayout(gridLayout_7);
+
+        line = new QFrame(widget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line);
+
+        gridLayout_10 = new QGridLayout();
+        gridLayout_10->setSpacing(6);
+        gridLayout_10->setObjectName(QStringLiteral("gridLayout_10"));
+        gridLayout_10->setContentsMargins(-1, 0, -1, 0);
+        widget_6 = new QWidget(widget);
+        widget_6->setObjectName(QStringLiteral("widget_6"));
+        widget_6->setMinimumSize(QSize(40, 0));
+        widget_6->setMaximumSize(QSize(24, 16777215));
+        QPalette palette;
+        QBrush brush(QColor(255, 0, 0, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        widget_6->setPalette(palette);
+        widget_6->setAutoFillBackground(true);
+
+        gridLayout_10->addWidget(widget_6, 0, 3, 1, 1);
+
+        widget_3 = new QWidget(widget);
+        widget_3->setObjectName(QStringLiteral("widget_3"));
+        widget_3->setMinimumSize(QSize(40, 0));
+        widget_3->setMaximumSize(QSize(24, 16777215));
+        QPalette palette1;
+        QBrush brush1(QColor(0, 170, 0, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::Window, brush1);
+        palette1.setBrush(QPalette::Inactive, QPalette::Window, brush1);
+        palette1.setBrush(QPalette::Disabled, QPalette::Window, brush1);
+        widget_3->setPalette(palette1);
+        widget_3->setAutoFillBackground(true);
+
+        gridLayout_10->addWidget(widget_3, 0, 2, 1, 1);
+
+        widget_5 = new QWidget(widget);
+        widget_5->setObjectName(QStringLiteral("widget_5"));
+        widget_5->setMinimumSize(QSize(40, 0));
+        widget_5->setMaximumSize(QSize(24, 16777215));
+        QPalette palette2;
+        QBrush brush2(QColor(243, 243, 243, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette2.setBrush(QPalette::Active, QPalette::Base, brush2);
+        QBrush brush3(QColor(255, 191, 0, 255));
+        brush3.setStyle(Qt::SolidPattern);
+        palette2.setBrush(QPalette::Active, QPalette::Window, brush3);
+        palette2.setBrush(QPalette::Inactive, QPalette::Base, brush2);
+        palette2.setBrush(QPalette::Inactive, QPalette::Window, brush3);
+        palette2.setBrush(QPalette::Disabled, QPalette::Base, brush3);
+        palette2.setBrush(QPalette::Disabled, QPalette::Window, brush3);
+        widget_5->setPalette(palette2);
+        widget_5->setAutoFillBackground(true);
+
+        gridLayout_10->addWidget(widget_5, 0, 1, 1, 1);
+
+        widget_4 = new QWidget(widget);
+        widget_4->setObjectName(QStringLiteral("widget_4"));
+        QSizePolicy sizePolicy9(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(widget_4->sizePolicy().hasHeightForWidth());
+        widget_4->setSizePolicy(sizePolicy9);
+        widget_4->setMinimumSize(QSize(60, 20));
+        widget_4->setMaximumSize(QSize(24, 16777215));
+        QPalette palette3;
+        QBrush brush4(QColor(255, 255, 255, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette3.setBrush(QPalette::Active, QPalette::Base, brush4);
+        QBrush brush5(QColor(0, 0, 255, 255));
+        brush5.setStyle(Qt::SolidPattern);
+        palette3.setBrush(QPalette::Active, QPalette::Window, brush5);
+        palette3.setBrush(QPalette::Inactive, QPalette::Base, brush4);
+        palette3.setBrush(QPalette::Inactive, QPalette::Window, brush5);
+        palette3.setBrush(QPalette::Disabled, QPalette::Base, brush5);
+        palette3.setBrush(QPalette::Disabled, QPalette::Window, brush5);
+        widget_4->setPalette(palette3);
+        widget_4->setAutoFillBackground(true);
+
+        gridLayout_10->addWidget(widget_4, 0, 0, 1, 1);
+
+        checkBox = new QCheckBox(widget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox->setEnabled(false);
+        sizePolicy4.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
+        checkBox->setSizePolicy(sizePolicy4);
+        checkBox->setCheckable(true);
+        checkBox->setChecked(true);
+
+        gridLayout_10->addWidget(checkBox, 1, 0, 1, 1);
+
+        plotz_chk = new QCheckBox(widget);
         plotz_chk->setObjectName(QStringLiteral("plotz_chk"));
         plotz_chk->setChecked(true);
 
-        gridLayout_2->addWidget(plotz_chk, 2, 0, 1, 1);
+        gridLayout_10->addWidget(plotz_chk, 1, 1, 1, 1);
 
-        widget_5 = new QWidget(groupBox);
-        widget_5->setObjectName(QStringLiteral("widget_5"));
-        widget_5->setMaximumSize(QSize(24, 16777215));
-        QPalette palette;
-        QBrush brush(QColor(243, 243, 243, 255));
-        brush.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Base, brush);
-        QBrush brush1(QColor(255, 191, 0, 255));
-        brush1.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Window, brush1);
-        palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Window, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
-        widget_5->setPalette(palette);
-        widget_5->setAutoFillBackground(true);
-
-        gridLayout_2->addWidget(widget_5, 2, 1, 1, 1);
-
-        widget_4 = new QWidget(groupBox);
-        widget_4->setObjectName(QStringLiteral("widget_4"));
-        widget_4->setMaximumSize(QSize(24, 16777215));
-        QPalette palette1;
-        QBrush brush2(QColor(255, 255, 255, 255));
-        brush2.setStyle(Qt::SolidPattern);
-        palette1.setBrush(QPalette::Active, QPalette::Base, brush2);
-        QBrush brush3(QColor(0, 0, 255, 255));
-        brush3.setStyle(Qt::SolidPattern);
-        palette1.setBrush(QPalette::Active, QPalette::Window, brush3);
-        palette1.setBrush(QPalette::Inactive, QPalette::Base, brush2);
-        palette1.setBrush(QPalette::Inactive, QPalette::Window, brush3);
-        palette1.setBrush(QPalette::Disabled, QPalette::Base, brush3);
-        palette1.setBrush(QPalette::Disabled, QPalette::Window, brush3);
-        widget_4->setPalette(palette1);
-        widget_4->setAutoFillBackground(true);
-
-        gridLayout_2->addWidget(widget_4, 0, 1, 1, 1);
-
-        widget_6 = new QWidget(groupBox);
-        widget_6->setObjectName(QStringLiteral("widget_6"));
-        widget_6->setMaximumSize(QSize(24, 16777215));
-        QPalette palette2;
-        QBrush brush4(QColor(255, 0, 0, 255));
-        brush4.setStyle(Qt::SolidPattern);
-        palette2.setBrush(QPalette::Active, QPalette::Window, brush4);
-        palette2.setBrush(QPalette::Inactive, QPalette::Window, brush4);
-        palette2.setBrush(QPalette::Disabled, QPalette::Window, brush4);
-        widget_6->setPalette(palette2);
-        widget_6->setAutoFillBackground(true);
-
-        gridLayout_2->addWidget(widget_6, 4, 1, 1, 1);
-
-        widget_3 = new QWidget(groupBox);
-        widget_3->setObjectName(QStringLiteral("widget_3"));
-        widget_3->setMaximumSize(QSize(24, 16777215));
-        QPalette palette3;
-        QBrush brush5(QColor(0, 170, 0, 255));
-        brush5.setStyle(Qt::SolidPattern);
-        palette3.setBrush(QPalette::Active, QPalette::Window, brush5);
-        palette3.setBrush(QPalette::Inactive, QPalette::Window, brush5);
-        palette3.setBrush(QPalette::Disabled, QPalette::Window, brush5);
-        widget_3->setPalette(palette3);
-        widget_3->setAutoFillBackground(true);
-
-        gridLayout_2->addWidget(widget_3, 3, 1, 1, 1);
-
-        checkBox = new QCheckBox(groupBox);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-        checkBox->setEnabled(false);
-        checkBox->setChecked(true);
-
-        gridLayout_2->addWidget(checkBox, 0, 0, 1, 1);
-
-        plotr_chk = new QCheckBox(groupBox);
+        plotr_chk = new QCheckBox(widget);
         plotr_chk->setObjectName(QStringLiteral("plotr_chk"));
         plotr_chk->setChecked(true);
 
-        gridLayout_2->addWidget(plotr_chk, 3, 0, 1, 1);
+        gridLayout_10->addWidget(plotr_chk, 1, 2, 1, 1);
+
+        plotx_chk = new QCheckBox(widget);
+        plotx_chk->setObjectName(QStringLiteral("plotx_chk"));
+        plotx_chk->setChecked(true);
+
+        gridLayout_10->addWidget(plotx_chk, 1, 3, 1, 1);
 
 
-        verticalLayout->addWidget(groupBox);
+        verticalLayout->addLayout(gridLayout_10);
+
+        line_3 = new QFrame(widget);
+        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_3);
+
+        gridLayout_6 = new QGridLayout();
+        gridLayout_6->setSpacing(6);
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+        gridLayout_6->setVerticalSpacing(0);
+        gridLayout_6->setContentsMargins(-1, 6, -1, -1);
+        label_31 = new QLabel(widget);
+        label_31->setObjectName(QStringLiteral("label_31"));
+
+        gridLayout_6->addWidget(label_31, 3, 0, 1, 1);
+
+        lowZloss = new QLabel(widget);
+        lowZloss->setObjectName(QStringLiteral("lowZloss"));
+
+        gridLayout_6->addWidget(lowZloss, 5, 1, 1, 1);
+
+        lowZ = new QLabel(widget);
+        lowZ->setObjectName(QStringLiteral("lowZ"));
+
+        gridLayout_6->addWidget(lowZ, 2, 1, 1, 1);
+
+        label_28 = new QLabel(widget);
+        label_28->setObjectName(QStringLiteral("label_28"));
+
+        gridLayout_6->addWidget(label_28, 2, 0, 1, 1);
+
+        lowZfreq = new QLabel(widget);
+        lowZfreq->setObjectName(QStringLiteral("lowZfreq"));
+
+        gridLayout_6->addWidget(lowZfreq, 3, 1, 1, 1);
+
+        label_33 = new QLabel(widget);
+        label_33->setObjectName(QStringLiteral("label_33"));
+
+        gridLayout_6->addWidget(label_33, 5, 0, 1, 1);
+
+        label_32 = new QLabel(widget);
+        label_32->setObjectName(QStringLiteral("label_32"));
+
+        gridLayout_6->addWidget(label_32, 4, 0, 1, 1);
+
+        lowZlength = new QLabel(widget);
+        lowZlength->setObjectName(QStringLiteral("lowZlength"));
+
+        gridLayout_6->addWidget(lowZlength, 4, 1, 1, 1);
+
+        label_34 = new QLabel(widget);
+        label_34->setObjectName(QStringLiteral("label_34"));
+        sizePolicy2.setHeightForWidth(label_34->sizePolicy().hasHeightForWidth());
+        label_34->setSizePolicy(sizePolicy2);
+        label_34->setMinimumSize(QSize(0, 0));
+        label_34->setBaseSize(QSize(0, 0));
+        label_34->setScaledContents(false);
+        label_34->setWordWrap(true);
+        label_34->setMargin(0);
+
+        gridLayout_6->addWidget(label_34, 0, 0, 1, 2);
+
+
+        verticalLayout->addLayout(gridLayout_6);
 
         verticalSpacer = new QSpacerItem(20, 109, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -950,12 +1122,12 @@ public:
         canvas1 = new GraphCanvas(verticalLayoutWidget);
         canvas1->setObjectName(QStringLiteral("canvas1"));
         QPalette palette4;
-        palette4.setBrush(QPalette::Active, QPalette::Base, brush2);
-        palette4.setBrush(QPalette::Active, QPalette::Window, brush2);
-        palette4.setBrush(QPalette::Inactive, QPalette::Base, brush2);
-        palette4.setBrush(QPalette::Inactive, QPalette::Window, brush2);
-        palette4.setBrush(QPalette::Disabled, QPalette::Base, brush2);
-        palette4.setBrush(QPalette::Disabled, QPalette::Window, brush2);
+        palette4.setBrush(QPalette::Active, QPalette::Base, brush4);
+        palette4.setBrush(QPalette::Active, QPalette::Window, brush4);
+        palette4.setBrush(QPalette::Inactive, QPalette::Base, brush4);
+        palette4.setBrush(QPalette::Inactive, QPalette::Window, brush4);
+        palette4.setBrush(QPalette::Disabled, QPalette::Base, brush4);
+        palette4.setBrush(QPalette::Disabled, QPalette::Window, brush4);
         canvas1->setPalette(palette4);
         canvas1->setFrameShape(QFrame::Panel);
         canvas1->setFrameShadow(QFrame::Sunken);
@@ -1084,7 +1256,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1134,22 +1306,19 @@ public:
         label_27->setText(QApplication::translate("MainWindow", "delta", 0));
         delta->setText(QApplication::translate("MainWindow", "0%", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Fixed", 0));
-        fend_disp->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        fstep_disp->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        label_11->setText(QApplication::translate("MainWindow", "Span", 0));
+        label_10->setText(QApplication::translate("MainWindow", "MHz", 0));
+        fstart_disp->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        label->setText(QApplication::translate("MainWindow", "Center", 0));
+        useraw_chk->setText(QApplication::translate("MainWindow", "Use raw bridge data", 0));
+        label_22->setText(QApplication::translate("MainWindow", "Scan", 0));
         label_4->setText(QApplication::translate("MainWindow", "Step", 0));
         label_7->setText(QApplication::translate("MainWindow", "MHz", 0));
-        label_2->setText(QApplication::translate("MainWindow", "Start", 0));
-        fstep_disp->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_8->setText(QApplication::translate("MainWindow", "MHz", 0));
-        label->setText(QApplication::translate("MainWindow", "Center", 0));
         label_6->setText(QApplication::translate("MainWindow", "MHz", 0));
-        label_3->setText(QApplication::translate("MainWindow", "End", 0));
         label_5->setText(QApplication::translate("MainWindow", "Graph", 0));
         label_9->setText(QApplication::translate("MainWindow", "KHz", 0));
-        label_22->setText(QApplication::translate("MainWindow", "Scan", 0));
-        label_10->setText(QApplication::translate("MainWindow", "MHz", 0));
-        useraw_chk->setText(QApplication::translate("MainWindow", "Use raw bridge data", 0));
-        label_11->setText(QApplication::translate("MainWindow", "Span", 0));
-        fstart_disp->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         band_cb->clear();
         band_cb->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Custom", 0)
@@ -1172,22 +1341,35 @@ public:
          << QApplication::translate("MainWindow", "12-10m (25-30MHz)", 0)
         );
         label_13->setText(QApplication::translate("MainWindow", "Band", 0));
+        label_3->setText(QApplication::translate("MainWindow", "End", 0));
+        fend_disp->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        label_2->setText(QApplication::translate("MainWindow", "Start", 0));
         mhz->setText(QApplication::translate("MainWindow", "1M", 0));
         khz100->setText(QApplication::translate("MainWindow", "100K", 0));
         khz10->setText(QApplication::translate("MainWindow", "10K", 0));
         khz->setText(QApplication::translate("MainWindow", "1K", 0));
         scanBtn->setText(QApplication::translate("MainWindow", "Scan", 0));
-        syncCentre->setText(QApplication::translate("MainWindow", "Sync center with lowest swr point", 0));
-        syncCursor->setText(QApplication::translate("MainWindow", "Sync center with cursor position", 0));
-        pushButton5khz->setText(QApplication::translate("MainWindow", "+/- 5KHz sweep around center freq", 0));
-        pushButton20khz->setText(QApplication::translate("MainWindow", "+/- 20KHz sweep around center freq", 0));
-        pushButton50khz->setText(QApplication::translate("MainWindow", "+/- 50KHz sweep around center freq", 0));
-        pushButton100khz->setText(QApplication::translate("MainWindow", "+/- 100KHz sweep around center freq", 0));
-        groupBox->setTitle(QApplication::translate("MainWindow", "Plot", 0));
-        plotx_chk->setText(QApplication::translate("MainWindow", "X", 0));
-        plotz_chk->setText(QApplication::translate("MainWindow", "Z", 0));
+        syncCentre->setText(QApplication::translate("MainWindow", "lowest swr point", 0));
+        syncCursor->setText(QApplication::translate("MainWindow", "cursor position", 0));
+        label_36->setText(QApplication::translate("MainWindow", "Set center frequency using", 0));
+        pushButton5khz->setText(QApplication::translate("MainWindow", "5KHz", 0));
+        pushButton20khz->setText(QApplication::translate("MainWindow", "20KHz", 0));
+        pushButton100khz->setText(QApplication::translate("MainWindow", "100KHz", 0));
+        pushButton50khz->setText(QApplication::translate("MainWindow", "50KHz", 0));
+        label_35->setText(QApplication::translate("MainWindow", "Sweep around center frequency (+/-)", 0));
         checkBox->setText(QApplication::translate("MainWindow", "VSWR", 0));
+        plotz_chk->setText(QApplication::translate("MainWindow", "Z", 0));
         plotr_chk->setText(QApplication::translate("MainWindow", "R", 0));
+        plotx_chk->setText(QApplication::translate("MainWindow", "X", 0));
+        label_31->setText(QApplication::translate("MainWindow", "Frequency", 0));
+        lowZloss->setText(QApplication::translate("MainWindow", "lowZloss", 0));
+        lowZ->setText(QApplication::translate("MainWindow", "lowZ", 0));
+        label_28->setText(QApplication::translate("MainWindow", "Lowest Z", 0));
+        lowZfreq->setText(QApplication::translate("MainWindow", "lowZfreq", 0));
+        label_33->setText(QApplication::translate("MainWindow", "Cable loss @50 ohm", 0));
+        label_32->setText(QApplication::translate("MainWindow", "Electrical Length", 0));
+        lowZlength->setText(QApplication::translate("MainWindow", "lowZlength", 0));
+        label_34->setText(QApplication::translate("MainWindow", "Select the lowest freq with lowest Z with open end coax using cursor.", 0));
         label_12->setText(QApplication::translate("MainWindow", "SWR Min:", 0));
         swr_min_disp->setText(QApplication::translate("MainWindow", "1", 0));
         cursor_disp->setText(QApplication::translate("MainWindow", "Cursor data when graph is completed", 0));

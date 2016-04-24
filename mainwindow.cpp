@@ -159,6 +159,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	montimer.setParent(this);
 	connect(&montimer, SIGNAL(timeout()), this, SLOT(Slot_montimer_timeout()));
 
+
+//	QPixmap pix("cos.gif");
+
+//	ui->label_picture->setPixmap(pix);
+
 //std::setlocale(LC_ALL, "sv_SE.UTF-8");
 }
 
