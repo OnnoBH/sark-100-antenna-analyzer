@@ -67,6 +67,8 @@ private slots:
 
 	void Slot_scanBtn_click();
 	void Slot_monitorSync_click();
+	void Slot_syncCursor_click();
+	void Slot_syncWithCursor_click();
 
 	void Slot_syncCentre_click();
 	void Slot_button5khz_click();

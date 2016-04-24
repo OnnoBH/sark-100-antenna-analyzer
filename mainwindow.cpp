@@ -40,6 +40,7 @@ bool flip;
 double max_swr = 0.0;
 double min_swr = 10.0;
 double delta_swr = 0.0;
+double cursor_freq = 0.0;
 
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -91,6 +92,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->syncCentre, SIGNAL(clicked()), this,
 			SLOT(Slot_syncCentre_click()));
+
+	connect(ui->syncCursor, SIGNAL(clicked()), this,
+			SLOT(Slot_syncCursor_click()));
+
+	connect(ui->syncWithCursor, SIGNAL(clicked()), this,
+			SLOT(Slot_syncWithCursor_click()));
+
 
 	connect(ui->pushButton5khz, SIGNAL(clicked()), this,
 			SLOT(Slot_button5khz_click()));
@@ -275,6 +283,7 @@ void MainWindow::draw_graph1(int fraction) {
 
 void MainWindow::Slot_monitorSync_click() {
 	ui->monfreq->setValue(ui->fcentre->value());
+
 }
 
 void MainWindow::Slot_mon_mhz_change() {
@@ -319,6 +328,15 @@ void MainWindow::Slot_syncCentre_click() {
 	double freq = (scandata.points[scandata.swr_min_idx].freq / 1000000);
 	ui->fcentre->setValue(freq);
 }
+
+void MainWindow::Slot_syncCursor_click() {
+	ui->fcentre->setValue(cursor_freq);
+}
+
+void MainWindow::Slot_syncWithCursor_click() {
+	ui->monfreq->setValue(cursor_freq);
+}
+
 
 void MainWindow::Slot_button5khz_click() {
 
@@ -417,12 +435,11 @@ void MainWindow::Slot_cursor_move(double pos) {
 
 	Sample *sample = &scandata.points[n];
 
-
+	cursor_freq = sample->freq / 1000000;
 	ui->cursor_disp->setText(
-			QString("%1 (f=%2MHz, Z=%3%4, R=%5%6, X=%7)").arg(
-					sample->swr, 0, 'f', 2).arg(sample->freq / 1000000).arg(
-					sample->Z, 0, 'f', 2).arg(QChar(0x03A9)).arg(
-							sample->R, 0, 'f', 2).arg(
+			QString("%1 (f=%2MHz, Z=%3%4, R=%5%6, X=%7)").arg(sample->swr, 0,
+					'f', 2).arg(sample->freq / 1000000).arg(sample->Z, 0, 'f',
+					2).arg(QChar(0x03A9)).arg(sample->R, 0, 'f', 2).arg(
 					QChar(0x03A9)).arg(sample->X, 0, 'f', 2));
 
 }

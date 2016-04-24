@@ -75,10 +75,11 @@ public:
     QRadioButton *mon_1khz;
     QRadioButton *mon_100hz;
     QRadioButton *mon_10hz;
-    QPushButton *monStartBtn;
     QLabel *label_25;
-    QSlider *slider_hz;
+    QPushButton *monStartBtn;
     QPushButton *monitorSync;
+    QSlider *slider_hz;
+    QPushButton *syncWithCursor;
     QGroupBox *groupBox_2;
     QSpacerItem *verticalSpacer_3;
     QWidget *verticalLayoutWidget_2;
@@ -146,6 +147,7 @@ public:
     QPushButton *scanBtn;
     QProgressBar *progressBar;
     QPushButton *syncCentre;
+    QPushButton *syncCursor;
     QPushButton *pushButton5khz;
     QPushButton *pushButton20khz;
     QPushButton *pushButton50khz;
@@ -194,7 +196,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1179, 864);
+        MainWindow->resize(1179, 896);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -338,15 +340,20 @@ public:
 
         gridLayout_3->addLayout(gridLayout_4, 0, 1, 1, 1);
 
-        monStartBtn = new QPushButton(widget_8);
-        monStartBtn->setObjectName(QStringLiteral("monStartBtn"));
-
-        gridLayout_3->addWidget(monStartBtn, 6, 1, 1, 1);
-
         label_25 = new QLabel(widget_8);
         label_25->setObjectName(QStringLiteral("label_25"));
 
         gridLayout_3->addWidget(label_25, 2, 0, 1, 1);
+
+        monStartBtn = new QPushButton(widget_8);
+        monStartBtn->setObjectName(QStringLiteral("monStartBtn"));
+
+        gridLayout_3->addWidget(monStartBtn, 7, 1, 1, 1);
+
+        monitorSync = new QPushButton(widget_8);
+        monitorSync->setObjectName(QStringLiteral("monitorSync"));
+
+        gridLayout_3->addWidget(monitorSync, 5, 1, 1, 1);
 
         slider_hz = new QSlider(widget_8);
         slider_hz->setObjectName(QStringLiteral("slider_hz"));
@@ -358,10 +365,10 @@ public:
 
         gridLayout_3->addWidget(slider_hz, 2, 1, 1, 1);
 
-        monitorSync = new QPushButton(widget_8);
-        monitorSync->setObjectName(QStringLiteral("monitorSync"));
+        syncWithCursor = new QPushButton(widget_8);
+        syncWithCursor->setObjectName(QStringLiteral("syncWithCursor"));
 
-        gridLayout_3->addWidget(monitorSync, 5, 1, 1, 1);
+        gridLayout_3->addWidget(syncWithCursor, 6, 1, 1, 1);
 
 
         verticalLayout_6->addLayout(gridLayout_3);
@@ -796,6 +803,11 @@ public:
 
         verticalLayout->addWidget(syncCentre);
 
+        syncCursor = new QPushButton(widget);
+        syncCursor->setObjectName(QStringLiteral("syncCursor"));
+
+        verticalLayout->addWidget(syncCursor);
+
         pushButton5khz = new QPushButton(widget);
         pushButton5khz->setObjectName(QStringLiteral("pushButton5khz"));
 
@@ -1099,9 +1111,10 @@ public:
         mon_1khz->setText(QApplication::translate("MainWindow", "KHz", 0));
         mon_100hz->setText(QApplication::translate("MainWindow", "100Hz", 0));
         mon_10hz->setText(QApplication::translate("MainWindow", "10Hz", 0));
-        monStartBtn->setText(QApplication::translate("MainWindow", "Start", 0));
         label_25->setText(QApplication::translate("MainWindow", "Hz", 0));
+        monStartBtn->setText(QApplication::translate("MainWindow", "Start", 0));
         monitorSync->setText(QApplication::translate("MainWindow", "Sync with sweep center", 0));
+        syncWithCursor->setText(QApplication::translate("MainWindow", "Sync with cursor", 0));
         groupBox_2->setTitle(QString());
         label_19->setText(QApplication::translate("MainWindow", "\316\251", 0));
         label_18->setText(QApplication::translate("MainWindow", "X", 0));
@@ -1165,6 +1178,7 @@ public:
         khz->setText(QApplication::translate("MainWindow", "1K", 0));
         scanBtn->setText(QApplication::translate("MainWindow", "Scan", 0));
         syncCentre->setText(QApplication::translate("MainWindow", "Sync center with lowest swr point", 0));
+        syncCursor->setText(QApplication::translate("MainWindow", "Sync center with cursor position", 0));
         pushButton5khz->setText(QApplication::translate("MainWindow", "+/- 5KHz sweep around center freq", 0));
         pushButton20khz->setText(QApplication::translate("MainWindow", "+/- 20KHz sweep around center freq", 0));
         pushButton50khz->setText(QApplication::translate("MainWindow", "+/- 50KHz sweep around center freq", 0));
