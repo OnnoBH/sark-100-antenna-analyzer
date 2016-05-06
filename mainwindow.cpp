@@ -90,6 +90,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->onno, SIGNAL(valueChanged(int)), this,
 			SLOT(Slot_onno_change(int)));
 
+	connect(ui->LowestZ, SIGNAL(clicked()), this,
+				SLOT(Slot_lowestZ_click()));
+
+
+
 	connect(ui->syncCentre, SIGNAL(clicked()), this,
 			SLOT(Slot_syncCentre_click()));
 
@@ -98,7 +103,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(ui->syncWithCursor, SIGNAL(clicked()), this,
 			SLOT(Slot_syncWithCursor_click()));
-
 
 	connect(ui->pushButton5khz, SIGNAL(clicked()), this,
 			SLOT(Slot_button5khz_click()));
@@ -137,7 +141,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->monitorSync, SIGNAL(clicked()), this,
 			SLOT(Slot_monitorSync_click()));
 
-	QCheckBox *ctrls[] = { ui->plotz_chk, ui->plotx_chk, ui->plotr_chk, NULL };
+	QCheckBox *ctrls[] = { ui->plotz_chk, ui->plotx_chk, ui->plotr_chk, ui->plotswr_chk };
 	for (int i = 0; ctrls[i]; i++)
 		connect(ctrls[i], SIGNAL(stateChanged(int)), this,
 				SLOT(Slot_plot_change(int)));
@@ -158,7 +162,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	montimer.setParent(this);
 	connect(&montimer, SIGNAL(timeout()), this, SLOT(Slot_montimer_timeout()));
-
 
 //	QPixmap pix("cos.gif");
 
@@ -340,6 +343,20 @@ void MainWindow::Slot_syncCursor_click() {
 
 void MainWindow::Slot_syncWithCursor_click() {
 	ui->monfreq->setValue(cursor_freq);
+
+
+}
+
+void MainWindow::Slot_lowestZ_click(){
+
+
+
+	double freq = scandata.points[scandata.Z_min_idx].freq;
+	double z = scandata.points[scandata.Z_min_idx].Z;
+
+	ui->labelLowZ->setText(QString("%1Mhz %2%3").arg(freq/1000000, 0, 'f', 3).arg(z, 0, 'f', 1).arg(QChar(0x03A9)));
+
+
 }
 
 
@@ -446,6 +463,18 @@ void MainWindow::Slot_cursor_move(double pos) {
 					'f', 2).arg(sample->freq / 1000000).arg(sample->Z, 0, 'f',
 					2).arg(QChar(0x03A9)).arg(sample->R, 0, 'f', 2).arg(
 					QChar(0x03A9)).arg(sample->X, 0, 'f', 2));
+
+	double lowZvalue = (sample->Z);
+	double lowZfreqValue = (sample->freq / 1000000);
+	double lowZlossValue = 0.1738 * sample->Z;
+	double lowZlengthValue = 300000/(4 *(sample->freq / 1000000));
+
+
+	ui->lowZ->setText(QString("%1%2").arg(lowZvalue, 0, 'f', 2).arg(QChar(0x03A9)));
+	ui->lowZfreq->setText(QString("%1").arg(lowZfreqValue));
+	ui->lowZlength->setText(QString("%1 1/4 Lambda").arg(lowZlengthValue, 0, 'f', 1));
+	ui->lowZloss->setText(QString("%1dB").arg(lowZlossValue, 0, 'f', 1));
+
 
 }
 
@@ -591,6 +620,7 @@ void MainWindow::Slot_plot_change(int) {
 	ui->canvas1->ztrace->enabled = ui->plotz_chk->checkState() == Qt::Checked;
 	ui->canvas1->xtrace->enabled = ui->plotx_chk->checkState() == Qt::Checked;
 	ui->canvas1->rtrace->enabled = ui->plotr_chk->checkState() == Qt::Checked;
+	ui->canvas1->swrtrace->enabled = ui->plotswr_chk->checkState()==Qt::Checked;
 	draw_graph1(setFraction(scandata.GetPointCount()));
 //  ui->canvas1->update();
 }

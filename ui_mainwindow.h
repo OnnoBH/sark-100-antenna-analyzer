@@ -23,6 +23,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -165,10 +166,10 @@ public:
     QWidget *widget_3;
     QWidget *widget_5;
     QWidget *widget_4;
-    QCheckBox *checkBox;
     QCheckBox *plotz_chk;
     QCheckBox *plotr_chk;
     QCheckBox *plotx_chk;
+    QCheckBox *plotswr_chk;
     QFrame *line_3;
     QGridLayout *gridLayout_6;
     QLabel *label_31;
@@ -179,7 +180,13 @@ public:
     QLabel *label_33;
     QLabel *label_32;
     QLabel *lowZlength;
+    QPushButton *LowestZ;
+    QLabel *labelLowZ;
     QLabel *label_34;
+    QLabel *label_37;
+    QHBoxLayout *horizontalLayout_4;
+    QLineEdit *lineEdit;
+    QLabel *velocity;
     QSpacerItem *verticalSpacer;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
@@ -947,7 +954,7 @@ public:
         widget_6->setPalette(palette);
         widget_6->setAutoFillBackground(true);
 
-        gridLayout_10->addWidget(widget_6, 0, 3, 1, 1);
+        gridLayout_10->addWidget(widget_6, 0, 4, 1, 1);
 
         widget_3 = new QWidget(widget);
         widget_3->setObjectName(QStringLiteral("widget_3"));
@@ -962,7 +969,7 @@ public:
         widget_3->setPalette(palette1);
         widget_3->setAutoFillBackground(true);
 
-        gridLayout_10->addWidget(widget_3, 0, 2, 1, 1);
+        gridLayout_10->addWidget(widget_3, 0, 3, 1, 1);
 
         widget_5 = new QWidget(widget);
         widget_5->setObjectName(QStringLiteral("widget_5"));
@@ -982,7 +989,7 @@ public:
         widget_5->setPalette(palette2);
         widget_5->setAutoFillBackground(true);
 
-        gridLayout_10->addWidget(widget_5, 0, 1, 1, 1);
+        gridLayout_10->addWidget(widget_5, 0, 2, 1, 1);
 
         widget_4 = new QWidget(widget);
         widget_4->setObjectName(QStringLiteral("widget_4"));
@@ -991,7 +998,7 @@ public:
         sizePolicy9.setVerticalStretch(0);
         sizePolicy9.setHeightForWidth(widget_4->sizePolicy().hasHeightForWidth());
         widget_4->setSizePolicy(sizePolicy9);
-        widget_4->setMinimumSize(QSize(60, 20));
+        widget_4->setMinimumSize(QSize(65, 20));
         widget_4->setMaximumSize(QSize(24, 16777215));
         QPalette palette3;
         QBrush brush4(QColor(255, 255, 255, 255));
@@ -1009,33 +1016,29 @@ public:
 
         gridLayout_10->addWidget(widget_4, 0, 0, 1, 1);
 
-        checkBox = new QCheckBox(widget);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-        checkBox->setEnabled(false);
-        sizePolicy4.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
-        checkBox->setSizePolicy(sizePolicy4);
-        checkBox->setCheckable(true);
-        checkBox->setChecked(true);
-
-        gridLayout_10->addWidget(checkBox, 1, 0, 1, 1);
-
         plotz_chk = new QCheckBox(widget);
         plotz_chk->setObjectName(QStringLiteral("plotz_chk"));
         plotz_chk->setChecked(true);
 
-        gridLayout_10->addWidget(plotz_chk, 1, 1, 1, 1);
+        gridLayout_10->addWidget(plotz_chk, 1, 2, 1, 1);
 
         plotr_chk = new QCheckBox(widget);
         plotr_chk->setObjectName(QStringLiteral("plotr_chk"));
         plotr_chk->setChecked(true);
 
-        gridLayout_10->addWidget(plotr_chk, 1, 2, 1, 1);
+        gridLayout_10->addWidget(plotr_chk, 1, 3, 1, 1);
 
         plotx_chk = new QCheckBox(widget);
         plotx_chk->setObjectName(QStringLiteral("plotx_chk"));
         plotx_chk->setChecked(true);
 
-        gridLayout_10->addWidget(plotx_chk, 1, 3, 1, 1);
+        gridLayout_10->addWidget(plotx_chk, 1, 4, 1, 1);
+
+        plotswr_chk = new QCheckBox(widget);
+        plotswr_chk->setObjectName(QStringLiteral("plotswr_chk"));
+        plotswr_chk->setChecked(true);
+
+        gridLayout_10->addWidget(plotswr_chk, 1, 0, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout_10);
@@ -1060,7 +1063,7 @@ public:
         lowZloss = new QLabel(widget);
         lowZloss->setObjectName(QStringLiteral("lowZloss"));
 
-        gridLayout_6->addWidget(lowZloss, 5, 1, 1, 1);
+        gridLayout_6->addWidget(lowZloss, 6, 1, 1, 1);
 
         lowZ = new QLabel(widget);
         lowZ->setObjectName(QStringLiteral("lowZ"));
@@ -1080,7 +1083,7 @@ public:
         label_33 = new QLabel(widget);
         label_33->setObjectName(QStringLiteral("label_33"));
 
-        gridLayout_6->addWidget(label_33, 5, 0, 1, 1);
+        gridLayout_6->addWidget(label_33, 6, 0, 1, 1);
 
         label_32 = new QLabel(widget);
         label_32->setObjectName(QStringLiteral("label_32"));
@@ -1091,6 +1094,16 @@ public:
         lowZlength->setObjectName(QStringLiteral("lowZlength"));
 
         gridLayout_6->addWidget(lowZlength, 4, 1, 1, 1);
+
+        LowestZ = new QPushButton(widget);
+        LowestZ->setObjectName(QStringLiteral("LowestZ"));
+
+        gridLayout_6->addWidget(LowestZ, 7, 0, 1, 1);
+
+        labelLowZ = new QLabel(widget);
+        labelLowZ->setObjectName(QStringLiteral("labelLowZ"));
+
+        gridLayout_6->addWidget(labelLowZ, 7, 1, 1, 1);
 
         label_34 = new QLabel(widget);
         label_34->setObjectName(QStringLiteral("label_34"));
@@ -1103,6 +1116,28 @@ public:
         label_34->setMargin(0);
 
         gridLayout_6->addWidget(label_34, 0, 0, 1, 2);
+
+        label_37 = new QLabel(widget);
+        label_37->setObjectName(QStringLiteral("label_37"));
+
+        gridLayout_6->addWidget(label_37, 5, 0, 1, 1);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        lineEdit = new QLineEdit(widget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setMaximumSize(QSize(50, 16777215));
+
+        horizontalLayout_4->addWidget(lineEdit);
+
+        velocity = new QLabel(widget);
+        velocity->setObjectName(QStringLiteral("velocity"));
+
+        horizontalLayout_4->addWidget(velocity);
+
+
+        gridLayout_6->addLayout(horizontalLayout_4, 5, 1, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout_6);
@@ -1357,19 +1392,23 @@ public:
         pushButton100khz->setText(QApplication::translate("MainWindow", "100KHz", 0));
         pushButton50khz->setText(QApplication::translate("MainWindow", "50KHz", 0));
         label_35->setText(QApplication::translate("MainWindow", "Sweep around center frequency (+/-)", 0));
-        checkBox->setText(QApplication::translate("MainWindow", "VSWR", 0));
         plotz_chk->setText(QApplication::translate("MainWindow", "Z", 0));
         plotr_chk->setText(QApplication::translate("MainWindow", "R", 0));
         plotx_chk->setText(QApplication::translate("MainWindow", "X", 0));
+        plotswr_chk->setText(QApplication::translate("MainWindow", "VSWR", 0));
         label_31->setText(QApplication::translate("MainWindow", "Frequency", 0));
-        lowZloss->setText(QApplication::translate("MainWindow", "lowZloss", 0));
-        lowZ->setText(QApplication::translate("MainWindow", "lowZ", 0));
+        lowZloss->setText(QApplication::translate("MainWindow", "-", 0));
+        lowZ->setText(QApplication::translate("MainWindow", "-", 0));
         label_28->setText(QApplication::translate("MainWindow", "Lowest Z", 0));
-        lowZfreq->setText(QApplication::translate("MainWindow", "lowZfreq", 0));
+        lowZfreq->setText(QApplication::translate("MainWindow", "-", 0));
         label_33->setText(QApplication::translate("MainWindow", "Cable loss @50 ohm", 0));
         label_32->setText(QApplication::translate("MainWindow", "Electrical Length", 0));
-        lowZlength->setText(QApplication::translate("MainWindow", "lowZlength", 0));
+        lowZlength->setText(QApplication::translate("MainWindow", "-", 0));
+        LowestZ->setText(QApplication::translate("MainWindow", "Find lowest Z", 0));
+        labelLowZ->setText(QApplication::translate("MainWindow", "-", 0));
         label_34->setText(QApplication::translate("MainWindow", "Select the lowest freq with lowest Z with open end coax using cursor.", 0));
+        label_37->setText(QApplication::translate("MainWindow", "Physical Length (m)", 0));
+        velocity->setText(QApplication::translate("MainWindow", "v= -", 0));
         label_12->setText(QApplication::translate("MainWindow", "SWR Min:", 0));
         swr_min_disp->setText(QApplication::translate("MainWindow", "1", 0));
         cursor_disp->setText(QApplication::translate("MainWindow", "Cursor data when graph is completed", 0));

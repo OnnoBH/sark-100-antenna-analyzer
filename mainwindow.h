@@ -75,7 +75,7 @@ private slots:
 	void Slot_button20khz_click();
 	void Slot_button50khz_click();
 	void Slot_button100khz_click();
-
+	void Slot_lowestZ_click();
 	void Slot_khzScan(float factor, int stepSize);
 
 	void Slot_mon_mhz_change();
