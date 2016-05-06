@@ -180,13 +180,14 @@ public:
     QLabel *label_33;
     QLabel *label_32;
     QLabel *lowZlength;
-    QPushButton *LowestZ;
-    QLabel *labelLowZ;
     QLabel *label_34;
     QLabel *label_37;
     QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEdit;
     QLabel *velocity;
+    QHBoxLayout *horizontalLayout_5;
+    QLabel *labelLowZ;
+    QPushButton *LowestZ;
     QSpacerItem *verticalSpacer;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
@@ -1095,16 +1096,6 @@ public:
 
         gridLayout_6->addWidget(lowZlength, 4, 1, 1, 1);
 
-        LowestZ = new QPushButton(widget);
-        LowestZ->setObjectName(QStringLiteral("LowestZ"));
-
-        gridLayout_6->addWidget(LowestZ, 7, 0, 1, 1);
-
-        labelLowZ = new QLabel(widget);
-        labelLowZ->setObjectName(QStringLiteral("labelLowZ"));
-
-        gridLayout_6->addWidget(labelLowZ, 7, 1, 1, 1);
-
         label_34 = new QLabel(widget);
         label_34->setObjectName(QStringLiteral("label_34"));
         sizePolicy2.setHeightForWidth(label_34->sizePolicy().hasHeightForWidth());
@@ -1138,6 +1129,22 @@ public:
 
 
         gridLayout_6->addLayout(horizontalLayout_4, 5, 1, 1, 1);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        labelLowZ = new QLabel(widget);
+        labelLowZ->setObjectName(QStringLiteral("labelLowZ"));
+
+        horizontalLayout_5->addWidget(labelLowZ);
+
+
+        gridLayout_6->addLayout(horizontalLayout_5, 7, 1, 1, 1);
+
+        LowestZ = new QPushButton(widget);
+        LowestZ->setObjectName(QStringLiteral("LowestZ"));
+
+        gridLayout_6->addWidget(LowestZ, 7, 0, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout_6);
@@ -1404,11 +1411,11 @@ public:
         label_33->setText(QApplication::translate("MainWindow", "Cable loss @50 ohm", 0));
         label_32->setText(QApplication::translate("MainWindow", "Electrical Length", 0));
         lowZlength->setText(QApplication::translate("MainWindow", "-", 0));
-        LowestZ->setText(QApplication::translate("MainWindow", "Find lowest Z", 0));
-        labelLowZ->setText(QApplication::translate("MainWindow", "-", 0));
         label_34->setText(QApplication::translate("MainWindow", "Select the lowest freq with lowest Z with open end coax using cursor.", 0));
         label_37->setText(QApplication::translate("MainWindow", "Physical Length (m)", 0));
         velocity->setText(QApplication::translate("MainWindow", "v= -", 0));
+        labelLowZ->setText(QApplication::translate("MainWindow", "-", 0));
+        LowestZ->setText(QApplication::translate("MainWindow", "Find lowest Z", 0));
         label_12->setText(QApplication::translate("MainWindow", "SWR Min:", 0));
         swr_min_disp->setText(QApplication::translate("MainWindow", "1", 0));
         cursor_disp->setText(QApplication::translate("MainWindow", "Cursor data when graph is completed", 0));

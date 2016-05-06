@@ -65,6 +65,8 @@ private:
 
 private slots:
 
+	void Slot_syncLowZ_click();
+
 	void Slot_scanBtn_click();
 	void Slot_monitorSync_click();
 	void Slot_syncCursor_click();
