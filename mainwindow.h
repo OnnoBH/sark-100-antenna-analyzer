@@ -47,7 +47,9 @@ public:
 	SerialLink *link;
 
 private:
-
+	void updateLowZ(Sample data);
+	void moveCursor(int position);
+	void updateLength(QString text, double cursor_length);
 	void set_band(double f, double span);
 	void set_scan_disp();
 	void Auto_connect_device();
@@ -65,7 +67,8 @@ private:
 
 private slots:
 
-	void Slot_syncLowZ_click();
+	void textChangedSlot(QString text);
+	//void Slot_syncLowZ_click();
 
 	void Slot_scanBtn_click();
 	void Slot_monitorSync_click();

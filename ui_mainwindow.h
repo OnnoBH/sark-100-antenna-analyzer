@@ -1409,10 +1409,10 @@ public:
         label_28->setText(QApplication::translate("MainWindow", "Lowest Z", 0));
         lowZfreq->setText(QApplication::translate("MainWindow", "-", 0));
         label_33->setText(QApplication::translate("MainWindow", "Cable loss @50 ohm", 0));
-        label_32->setText(QApplication::translate("MainWindow", "Electrical Length", 0));
+        label_32->setText(QApplication::translate("MainWindow", "Electrical Length cm", 0));
         lowZlength->setText(QApplication::translate("MainWindow", "-", 0));
         label_34->setText(QApplication::translate("MainWindow", "Select the lowest freq with lowest Z with open end coax using cursor.", 0));
-        label_37->setText(QApplication::translate("MainWindow", "Physical Length (m)", 0));
+        label_37->setText(QApplication::translate("MainWindow", "Physical Length cm", 0));
         velocity->setText(QApplication::translate("MainWindow", "v= -", 0));
         labelLowZ->setText(QApplication::translate("MainWindow", "-", 0));
         LowestZ->setText(QApplication::translate("MainWindow", "Find lowest Z", 0));

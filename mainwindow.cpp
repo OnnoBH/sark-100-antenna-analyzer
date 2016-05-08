@@ -41,6 +41,7 @@ double max_swr = 0.0;
 double min_swr = 10.0;
 double delta_swr = 0.0;
 double cursor_freq = 0.0;
+double cursor_length = 0.0;
 
 MainWindow::MainWindow(QWidget *parent) :
 		QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -58,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	//ui->statusBar->addWidget(ui->progressBar);
 
 	setWindowTitle(Config::App);
+
+	connect(ui->lineEdit, SIGNAL(textChanged(QString )), this,
+			SLOT(textChangedSlot(QString )));
 
 	connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT(Slot_Load()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(Slot_Save()));
@@ -91,7 +95,6 @@ MainWindow::MainWindow(QWidget *parent) :
 			SLOT(Slot_onno_change(int)));
 
 	connect(ui->LowestZ, SIGNAL(clicked()), this, SLOT(Slot_lowestZ_click()));
-
 
 	connect(ui->syncCentre, SIGNAL(clicked()), this,
 			SLOT(Slot_syncCentre_click()));
@@ -214,6 +217,9 @@ void MainWindow::populate_table() {
 		//ui->scan_data->setItem(i, 5, new QTableWidgetItem(QString("%1").arg(point->X2)));
 	}
 }
+void MainWindow::textChangedSlot(QString text) {
+	updateLength(text, cursor_length);
+}
 
 void MainWindow::draw_graph1(int fraction) {
 	GraphScale *scale;
@@ -332,8 +338,10 @@ void MainWindow::Slot_khz_change() {
 }
 
 void MainWindow::Slot_syncCentre_click() {
-	double freq = (scandata.points[scandata.swr_min_idx].freq / 1000000);
-	ui->fcentre->setValue(freq);
+	if (scandata.GetPointCount() > 0) {
+		double freq = (scandata.points[scandata.swr_min_idx].freq / 1000000);
+		ui->fcentre->setValue(freq);
+	}
 }
 
 void MainWindow::Slot_syncCursor_click() {
@@ -345,21 +353,80 @@ void MainWindow::Slot_syncWithCursor_click() {
 
 }
 
-void MainWindow::Slot_syncLowZ_click() {
+/*
+ void MainWindow::Slot_syncLowZ_click() {
 
-	double freq = scandata.points[scandata.Z_min_idx].freq;
-	double z = scandata.points[scandata.Z_min_idx].Z;
+ Sample data = scandata.points[scandata.Z_min_idx];
 
-	ui->labelLowZ->setText(QString("%1Mhz %2%3").arg(freq/1000000, 0, 'f', 3).arg(z, 0, 'f', 1).arg(QChar(0x03A9)));
+ ui->labelLowZ->setText(
+ QString("%1Mhz %2%3").arg(data.freq / 1000000, 0, 'f', 3).arg(
+ data.Z, 0, 'f', 1).arg(QChar(0x03A9)));
+
+ moveCursor(scandata.Z_min_idx);
+
+ }
+ */
+
+void MainWindow::moveCursor(int position) {
+
+	if (scandata.GetPointCount() > 0) {
+
+		GraphCanvas* gc = ui->canvas1;
+
+		GraphCursor *cursor = gc->cursor;
+		//int x = cursor->pos().x();
+
+		int marginl = gc->graph.marginl;
+		int margint = gc->graph.margint;
+		int graphWidth = gc->graph.w;
+		int graphHeight = gc->graph.h;
+		int dataPoints = scandata.GetPointCount();
+		//int position = scandata.Z_min_idx;
+
+		float ratio = (float) position / (float) dataPoints;
+		float delta = (ratio * graphWidth) + marginl;
+
+		/*
+		 * marginl = x0
+		 * marginl+graph.w = x max
+		 */
+
+		cursor->move(delta, margint);
+		cursor->resize(1, graphHeight + 10);
+	}
 
 }
 
 void MainWindow::Slot_lowestZ_click() {
 
-	double lowZfreqValue = scandata.points[scandata.Z_min_idx].freq / 1000000;
-	double lowZvalue = scandata.points[scandata.Z_min_idx].Z;
+	if (scandata.GetPointCount() > 0) {
+
+		moveCursor(scandata.Z_min_idx);
+
+		Sample data = scandata.points[scandata.Z_min_idx];
+
+		updateLowZ(data);
+
+		updateLength("", cursor_length);
+
+	}
+}
+
+void MainWindow::updateLowZ(Sample data) {
+
+	//Sample* data = scandata.points.data();
+
+
+	double lowZfreqValue = data.freq / 1000000;
+	double lowZvalue = data.Z;
 	double lowZlossValue = 0.1738 * lowZvalue;
 	double lowZlengthValue = 300000 / (4 * lowZfreqValue);
+
+	cursor_freq = lowZfreqValue;
+	cursor_length = lowZlengthValue;
+
+	cursor_freq = lowZfreqValue;
+	cursor_length = lowZlengthValue;
 
 	ui->lowZ->setText(
 			QString("%1%2").arg(lowZvalue, 0, 'f', 2).arg(QChar(0x03A9)));
@@ -368,20 +435,24 @@ void MainWindow::Slot_lowestZ_click() {
 			QString("%1 1/4 Lambda").arg(lowZlengthValue, 0, 'f', 1));
 	ui->lowZloss->setText(QString("%1dB").arg(lowZlossValue, 0, 'f', 1));
 
-	ui->labelLowZ->setText(QString("%1Mhz %2%3").arg(lowZfreqValue, 0, 'f', 3).arg(lowZvalue, 0, 'f', 1).arg(QChar(0x03A9)));
+	ui->labelLowZ->setText(
+			QString("%1Mhz %2%3").arg(lowZfreqValue, 0, 'f', 3).arg(lowZvalue,
+					0, 'f', 1).arg(QChar(0x03A9)));
 
-
+	ui->cursor_disp->setText(
+			QString("%1 (f=%2MHz, Z=%3%4, R=%5%6, X=%7)").arg(data.swr, 0, 'f',
+					2).arg(data.freq / 1000000).arg(data.Z, 0, 'f', 2).arg(
+					QChar(0x03A9)).arg(data.R, 0, 'f', 2).arg(QChar(0x03A9)).arg(
+					data.X, 0, 'f', 2));
 }
 
 void MainWindow::Slot_button5khz_click() {
-
 	float factor = 0.005;
 	Slot_khzScan(factor, 500);
 
 }
 
 void MainWindow::Slot_button20khz_click() {
-
 	float factor = 0.020;
 	Slot_khzScan(factor, 500);
 }
@@ -462,15 +533,26 @@ void MainWindow::Slot_scanBtn_click() {
 }
 
 void MainWindow::Slot_cursor_move(double pos) {
-//printf("pos=%lf\n",pos);
 	int n = pos * (double) (scandata.points.size() - 1);
+	//printf("x=%d %d \n",pos, n);
+
 
 	if (n < 0 || n >= scandata.GetPointCount())
 		return;
 
+	//Sample* data = scandata.points.data();
+
+
 	Sample *sample = &scandata.points[n];
 
 	cursor_freq = sample->freq / 1000000;
+	cursor_length = 300000 / (4 * (sample->freq / 1000000));
+
+
+	//cursor_freq = data->freq / 1000000;
+	//cursor_length = 300000 / (4 * (data->freq / 1000000));
+
+
 	ui->cursor_disp->setText(
 			QString("%1 (f=%2MHz, Z=%3%4, R=%5%6, X=%7)").arg(sample->swr, 0,
 					'f', 2).arg(sample->freq / 1000000).arg(sample->Z, 0, 'f',
@@ -488,6 +570,29 @@ void MainWindow::Slot_cursor_move(double pos) {
 	ui->lowZlength->setText(
 			QString("%1 1/4 Lambda").arg(lowZlengthValue, 0, 'f', 1));
 	ui->lowZloss->setText(QString("%1dB").arg(lowZlossValue, 0, 'f', 1));
+
+
+	updateLength("", cursor_length);
+
+}
+
+void MainWindow::updateLength(QString text, double cursor_length) {
+
+	int value = 0;
+	if (text.length() == 0) {
+		QString s = ui->lineEdit->text();
+		value = s.toInt();
+	} else {
+		value = text.toInt();
+	}
+
+	if (value > 0 && cursor_length > 0) {
+		double velocity = value / cursor_length;
+
+		ui->velocity->setText(QString("v=%1").arg(velocity, 0, 'f', 2));
+	} else {
+		ui->velocity->setText("invalid");
+	}
 
 }
 
@@ -536,37 +641,37 @@ void MainWindow::Slot_band_change(int idx) {
 		break;     //30m
 	case 5:
 		set_band(12.9, 0.2);
-		break;    //25m
+		break;     //25m
 	case 6:
 		set_band(14.1, 0.2);
-		break;    //20m
+		break;     //20m
 	case 7:
 		set_band(18.1, 0.2);
-		break;    //17m
+		break;     //17m
 	case 8:
 		set_band(21.1, 0.2);
-		break; //15m
+		break;     //15m
 	case 9:
 		set_band(24.9, 0.2);
-		break; //12m
+		break;     //12m
 	case 10:
 		set_band(27.0, 2.0);
-		break;  //11m
+		break;     //11m
 	case 11:
 		set_band(28.5, 1);
-		break;  //10m
+		break;     //10m
 	case 12:
 		set_band(29.5, 1);
-		break;  //10m
+		break;     //10m
 	case 13:
 		set_band(40, 18.0);
-		break;      //8m
+		break;     //8m
 	case 14:
 		set_band(50.5, 0.5);
-		break;      //6m
+		break;     //6m
 	case 15:
 		set_band(30.5, 59.0);
-		break; // test
+		break;     // test
 	case 16:
 		set_band(16.5, 27.0);
 		break;
@@ -630,11 +735,13 @@ void MainWindow::Slot_onno_change(int x) {
 }
 
 void MainWindow::Slot_plot_change(int) {
-	ui->canvas1->ztrace->enabled = ui->plotz_chk->checkState() == Qt::Checked;
-	ui->canvas1->xtrace->enabled = ui->plotx_chk->checkState() == Qt::Checked;
-	ui->canvas1->rtrace->enabled = ui->plotr_chk->checkState() == Qt::Checked;
-	ui->canvas1->swrtrace->enabled = ui->plotswr_chk->checkState()
-			== Qt::Checked;
+
+	GraphCanvas* gc = ui->canvas1;
+
+	gc->ztrace->enabled = ui->plotz_chk->checkState() == Qt::Checked;
+	gc->xtrace->enabled = ui->plotx_chk->checkState() == Qt::Checked;
+	gc->rtrace->enabled = ui->plotr_chk->checkState() == Qt::Checked;
+	gc->swrtrace->enabled = ui->plotswr_chk->checkState() == Qt::Checked;
 	draw_graph1(setFraction(scandata.GetPointCount()));
 //  ui->canvas1->update();
 }
@@ -746,18 +853,18 @@ void MainWindow::Slot_Save() {
 }
 
 void MainWindow::Auto_connect_device() {
-	//unsigned int i;
-	//QDir dir("/dev","ttyUSB*");
+//unsigned int i;
+//QDir dir("/dev","ttyUSB*");
 	QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
 			QDir::System);
 
 	printf("auto: %d\n", dir.count());
 
-	//printf("auto: %1\n", dir[0]);
+//printf("auto: %1\n", dir[0]);
 
-	//ui->menuDevice->clear();
-	//for (i = 0; i < dir.count(); i++)
-	//	ui->menuDevice->addAction(dir[i]);
+//ui->menuDevice->clear();
+//for (i = 0; i < dir.count(); i++)
+//	ui->menuDevice->addAction(dir[i]);
 
 	if (link)
 		delete link;
@@ -871,6 +978,10 @@ void MainWindow::Slot_monStart_click() {
 }
 
 void MainWindow::Slot_monStop_click() {
+	/*
+	 * will not work since we use stateless push towards generator
+	 */
+
 	montimer.stop();
 
 	ui->monStartBtn->setText(QString("%1").arg("Start"));
