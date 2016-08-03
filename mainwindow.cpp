@@ -142,11 +142,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->monitorSync, SIGNAL(clicked()), this,
 			SLOT(Slot_monitorSync_click()));
 
-	QCheckBox *ctrls[] = { ui->plotz_chk, ui->plotx_chk, ui->plotr_chk,
-			ui->plotswr_chk };
-	for (int i = 0; ctrls[i]; i++)
-		connect(ctrls[i], SIGNAL(stateChanged(int)), this,
-				SLOT(Slot_plot_change(int)));
+    QCheckBox *ctrls[] = {ui->plotz_chk,ui->plotx_chk,ui->plotr_chk,ui->plotswr_chk, NULL};
+    for (int i=0; ctrls[i]; i++)
+        connect(ctrls[i], SIGNAL(stateChanged(int)), this, SLOT(Slot_plot_change(int)));
 
 	link = new SerialLink("/dev/ttyUSB0", 57600);
 	if (link->IsUp())
@@ -222,7 +220,10 @@ void MainWindow::textChangedSlot(QString text) {
 }
 
 void MainWindow::draw_graph1(int fraction) {
-	GraphScale *scale;
+
+ if (scandata.points.size()>0){
+
+    GraphScale *scale;
 	//double n;
 
 	scale = ui->canvas1->xscale;
@@ -291,6 +292,7 @@ void MainWindow::draw_graph1(int fraction) {
 					(scandata.points[scandata.swr_bw_hi_idx].freq
 							- scandata.points[scandata.swr_bw_lo_idx].freq)
 							/ 1000000, 0, 'f', 2));
+}
 
 }
 
@@ -741,7 +743,7 @@ void MainWindow::Slot_plot_change(int) {
 	gc->ztrace->enabled = ui->plotz_chk->checkState() == Qt::Checked;
 	gc->xtrace->enabled = ui->plotx_chk->checkState() == Qt::Checked;
 	gc->rtrace->enabled = ui->plotr_chk->checkState() == Qt::Checked;
-	gc->swrtrace->enabled = ui->plotswr_chk->checkState() == Qt::Checked;
+    gc->swrtrace->enabled = ui->plotswr_chk->checkState() == Qt::Checked;
 	draw_graph1(setFraction(scandata.GetPointCount()));
 //  ui->canvas1->update();
 }
