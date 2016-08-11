@@ -32,6 +32,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//#include <QTextStream>
+// #include <QCoreApplication>
+ #include <QtSerialPort/QSerialPortInfo>
+
+
+
+
 const Version MainWindow::version = Version(0, 10, 14, "mod@pa1ap");
 
 ScanData scandata;
@@ -53,10 +60,18 @@ MainWindow::MainWindow(QWidget *parent) :
 //std::setlocale(LC_ALL, "sv_SE");
 //}
 
+
 	Config::read();
+
+
+  //  QSerialPortInfo::availablePorts();
+
 
 	ui->setupUi(this);
 	//ui->statusBar->addWidget(ui->progressBar);
+
+    Auto_connect_device();
+
 
 	setWindowTitle(Config::App);
 
@@ -169,6 +184,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //std::setlocale(LC_ALL, "sv_SE.UTF-8");
 }
+
+
 
 MainWindow::~MainWindow() {
 	delete link;
@@ -855,32 +872,41 @@ void MainWindow::Slot_Save() {
 }
 
 void MainWindow::Auto_connect_device() {
-//unsigned int i;
-//QDir dir("/dev","ttyUSB*");
-	QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
-			QDir::System);
 
-	printf("auto: %d\n", dir.count());
 
-//printf("auto: %1\n", dir[0]);
+    const auto serialPortInfos = QSerialPortInfo::availablePorts();
 
-//ui->menuDevice->clear();
-//for (i = 0; i < dir.count(); i++)
-//	ui->menuDevice->addAction(dir[i]);
+    if (serialPortInfos.count()==1){
 
-	if (link)
-		delete link;
+    for (const QSerialPortInfo &serialPortInfo : serialPortInfos) {
 
-	link = new SerialLink(dir[0].toLatin1().data(), 57600);
 
-	if (link->IsUp())
-		link->Cmd_Off();
+        //const auto deviceSuffix = serialPortInfo.portName().toLocal8Bit().constData();
+
+        if (link){
+       //     delete link;
+        }
+        //link = new SerialLink(QString("/dev/").append(serialPortInfo.portName().toLocal8Bit().constData()).toLatin1().data(), 57600);
+
+           //     link = new SerialLink(QString("/dev/" + act->text()).toLatin1().data(),
+            //            57600);
+
+
+
+        if (link->IsUp()){
+            link->Cmd_Off();
+        }
+
+        }
+    }
+
+
+
 
 }
 
 void MainWindow::Slot_menuDevice_Show() {
 	unsigned int i;
-//QDir dir("/dev","ttyUSB*");
 	QDir dir("/dev", Config::SERIAL_DEV_FILTER, QDir::Name | QDir::IgnoreCase,
 			QDir::System);
 
@@ -915,9 +941,11 @@ void MainWindow::Slot_Settings() {
 	SettingsDlg dlg;
 
 	if (dlg.exec() == QDialog::Accepted) {
-		scandata.UpdateStats();
-		draw_graph1(setFraction(scandata.GetPointCount()));
-	}
+        if (scandata.points.size()>0){
+            scandata.UpdateStats();
+            draw_graph1(setFraction(scandata.GetPointCount()));
+        }
+    }
 }
 
 void MainWindow::Slot_copy() {
