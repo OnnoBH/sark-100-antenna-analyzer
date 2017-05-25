@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	//ui->statusBar->addWidget(ui->progressBar);
 
-    Auto_connect_device();
+//    Auto_connect_device();
 
 
 	setWindowTitle(Config::App);
@@ -161,9 +161,9 @@ MainWindow::MainWindow(QWidget *parent) :
     for (int i=0; ctrls[i]; i++)
         connect(ctrls[i], SIGNAL(stateChanged(int)), this, SLOT(Slot_plot_change(int)));
 
-	link = new SerialLink("/dev/ttyUSB0", 57600);
-	if (link->IsUp())
-		link->Cmd_Off();
+    link = new SerialLink("/dev/ttyUSB0", 57600);
+    if (link->IsUp())
+        link->Cmd_Off();
 
 	ui->band_cb->setCurrentIndex(6);
 
@@ -871,39 +871,6 @@ void MainWindow::Slot_Save() {
 	}
 }
 
-void MainWindow::Auto_connect_device() {
-
-
-    const auto serialPortInfos = QSerialPortInfo::availablePorts();
-
-    if (serialPortInfos.count()==1){
-
-    for (const QSerialPortInfo &serialPortInfo : serialPortInfos) {
-
-
-        //const auto deviceSuffix = serialPortInfo.portName().toLocal8Bit().constData();
-
-        if (link){
-       //     delete link;
-        }
-        //link = new SerialLink(QString("/dev/").append(serialPortInfo.portName().toLocal8Bit().constData()).toLatin1().data(), 57600);
-
-           //     link = new SerialLink(QString("/dev/" + act->text()).toLatin1().data(),
-            //            57600);
-
-
-
-        if (link->IsUp()){
-            link->Cmd_Off();
-        }
-
-        }
-    }
-
-
-
-
-}
 
 void MainWindow::Slot_menuDevice_Show() {
 	unsigned int i;
